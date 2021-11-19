@@ -1,0 +1,208 @@
+﻿@model FitPro.BusinessLogic.RecipeListModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="display-4 text-center">Recipes List</div>
+
+<input id="CurrentUserRole" value="@CurrentUser.Role" hidden />
+<input id="CurrentUserId" value="@CurrentUser.Id" hidden />
+
+<div class="home-container">
+    <div class="my-table-header">
+
+        <div class="row">
+            <div class="col">
+                <div id="addFilter" class="workout-font" style="cursor:pointer">
+                    Click here to add some filters
+                </div>
+            </div>
+            @if (CurrentUser.Role == "Nutritionist")
+            {
+                <div class="col">
+                    <div class="float-right" style="margin-bottom: 2rem">
+                        <a asp-controller="Nutritionist" asp-action="AddRecipe" class="btn brown-btn">Add Recipe</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="recipeFilters" style="display:none">
+            <div class="row">
+                <div class="col my-auto">
+                    <div class="d-flex justify-content-center">
+                        <div class="input-group rounded">
+                            <input asp-for="Filter.SearchString" type="text" id="search-input-W" />
+                            <div class="btn brown-btn" id="search-button-W" disablee>
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col my-auto">
+                    <p>
+                        Add categories
+                        <select id="select-categories" style="width: 60%" asp-for="Filter.SelectedCategories" multiple="multiple" class="form-control" asp-items="@(new SelectList(@Model.Filter.Categories, "Value", "Text"))"></select>
+                    </p>
+
+                    <p style="margin-top: 1rem">
+                        Add nutritionists
+                        <select id="select-nutritionists" style="width: 65%" asp-for="Filter.SelectedNutritionist" multiple="multiple" class="form-control" asp-items="@(new SelectList(@Model.Filter.Nutritionist, "Value", "Text"))"></select>
+                    </p>
+                </div>
+
+                <div class="col">
+                    <div class="float-right">
+                        <p>
+                            Add sort
+                            <select id="select-sort-W" class="from-select" aria-label="Default select example">
+                                <option>None</option>
+                                <option value="Name Asscending">Asscending by Name</option>
+                                <option value="Name Descending">Descending by Name</option>
+                                <option value="Time Asscending">Asscending by Time</option>
+                                <option value="Time Descending">Descending by Time</option>
+                                <option value="Calo Asscending">Asscending by Burnt Calories</option>
+                                <option value="Calo Descending">Descending by Burnt Calories</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            Add time restrictions
+                            <select id="select-time" class="from-select" aria-label="Default select example">
+                                <option value="">None</option>
+                                <option value="0 10">0 - 10 min</option>
+                                <option value="10 20">10 - 20 min</option>
+                                <option value="20 30">20 - 30 min</option>
+                                <option value="30 60">30 - 60 min</option>
+                                <option value="60 90">60 - 90 min</option>
+                                <option value="90">More than 90 min</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            Add burned calories restrictions
+                            <select id="select-calories" class="from-select" aria-label="Default select example">
+                                <option value="">None</option>
+                                <option value="0 50">0 - 50</option>
+                                <option value="50 100">50 - 100</option>
+                                <option value="100 200">100 - 200</option>
+                                <option value="200 500">200 - 500</option>
+                                <option value="500">More than 500</option>
+                            </select>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="filterNow" class="workout-font text-center" style="cursor:pointer"><p>Filter</p></div>
+        </div>
+    </div>
+    <hr />
+
+    <div class="workout-container" id="recipesList">
+        @if (Model.RecipeList != null && Model.RecipeList.Count() > 0)
+        {
+            @foreach (var elem in @Model.RecipeList)
+            {
+                <div class="workout-box">
+                    <div class="workout-content">
+                        <a asp-controller="Nutritionist" asp-action="DetailRecipe" asp-route-idRecipe="@elem.IdRecipe">
+                            <i class="fas fa-book-open"></i>
+                        </a>
+                        @if (CurrentUser.Role == "Nutritionist")
+                        {
+                            <a asp-controller="Nutritionist" asp-action="EditRecipe" asp-route-idRecipe="@elem.IdRecipe">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-controller="Nutritionist" asp-action="DeleteRecipe" asp-route-idRecipe="@elem.IdRecipe" asp-route-currentId="@CurrentUser.Id">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        }
+                        else if (CurrentUser.Role != null)
+                        {
+
+                            @if (elem.IsSaved)
+                            {
+                                <div id="unsave_@elem.IdRecipe" class="UnsaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="unsaveRecipe(event)">
+                                    <i class="fas fa-bookmark"></i>
+                                </div>
+                                <div id="save_@elem.IdRecipe" style="display:none" class="SaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="saveRecipe(event)">
+                                    <i class="far fa-bookmark"></i>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="unsave_@elem.IdRecipe" style="display:none" class="UnsaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="unsaveRecipe(event)">
+                                    <i class="fas fa-bookmark"></i>
+                                </div>
+                                <div id="save_@elem.IdRecipe" class="SaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="saveRecipe(event)">
+                                    <i class="far fa-bookmark"></i>
+                                </div>
+                            }
+
+                            <div id="share_@elem.IdRecipe" class="ShareItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="shareRecipe(event)">
+                                <i class="fas fa-share"></i>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="workout-title"><p>@elem.Name</p></div>
+                    <div class="recipe-image"><img src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = elem.IdRecipe })" /></div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <script id="recipesTemplate" type="text/x-handlebars-template">
+        <div class="workout-box">
+            <div class="workout-content">
+                <div class="RecipeDetail" data-idrecipe="{{idRecipe}}" onclick="detailRecipe(event)">
+                    <i class="fas fa-book-open"></i>
+                </div>
+
+                {{#ifEquals role "Nutritionist"}}
+                <div class="editRecipe" data-idrecipe="{{idRecipe}}" onclick="editRecipe(event)">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="deleteRecipe" data-idrecipe="{{idRecipe}}" data-id="{{idUser}}"  onclick="deleteRecipe(event)" >
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                {{/ifEquals}}
+                {{#ifEquals role "Regular"}}
+                {{#if isSaved}}
+                <div id="unsave_{{idRecipe}}" class="UnsaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="unsaveRecipe(event)">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div id="save_{{idRecipe}}" style="display:none" class="SaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="saveRecipe(event)">
+                    <i class="far fa-bookmark"></i>
+                </div>
+                {{else}}
+                <div id="unsave_{{idRecipe}}" style="display:none" class="UnsaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="unsaveRecipe(event)">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div id="save_{{idRecipe}}" class="SaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="saveRecipe(event)">
+                    <i class="far fa-bookmark"></i>
+                </div>
+                {{/if}}
+
+                <div id="share_{{idRecipe}}" class="ShareItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="shareRecipe(event)">
+                    <i class="fas fa-share"></i>
+                </div>
+                {{/ifEquals}}
+
+            </div>
+            <div class="workout-title"><p>{{name}}</p></div>
+            <div class="recipe-image"><img src="/Nutritionist/RecipePic?recipeId={{idRecipe}}" /></div>
+        </div>
+    </script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="@Url.Content("/js/HandlerHelper.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/js/Recipes/PopulateRecipes.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,65 @@
+﻿@model FitPro.BusinessLogic.DetailsNutritionist
+
+<div class="home-container">
+    <div class="text-center display-4">@Model.UserName</div>
+    <div class="home-container">
+        <div class="row">
+            <div class="col-auto">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName=@Model.UserName" style="border-radius: 50%" />
+                </div>
+            </div>
+            <div class="col my-auto">
+                <p><i class="fas fa-signature"></i>   Name:  @Model.UserName</p>
+                <p><i class="fas fa-envelope-open-text"></i>   Email:  @Model.Email</p>
+                <p><i class="fas fa-code-branch"></i>   Contributions:  @Model.ContributionsTotal</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem">
+            <div style="width: 100%">
+                <div class="display-6">Some recipes</div>
+                <hr />
+            </div>
+            <div class="workout-container" id="savedList">
+                @foreach (var elem in Model.LastRecipe)
+                {
+                    <div class="workout-box" id="savedItem">
+                        <div class="workout-title"><a asp-action="DetailRecipe" asp-controller="Nutritionist" asp-route-idRecipe="@elem.IdRecipe">@elem.Name</a></div>
+                        <div class="recipe-image"><img src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = elem.IdRecipe })" /></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem">
+            <div style="width: 100%">
+                <div class="display-6">Some aliments</div>
+                <hr />
+            </div>
+
+            <table class="table text-center brown-text">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Calories</th>
+                            <th>Proteins</th>
+                            <th>Carbos</th>
+                            <th>Fats</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alimentsList">
+                        @foreach (var aliment in Model.LastAliments)
+                        {
+                            <tr>
+                                <td>@aliment.Name</td>
+                                <td>@aliment.Calories</td>
+                                <td>@aliment.Protein</td>
+                                <td>@aliment.Carbo</td>
+                                <td>@aliment.Fat</td>
+                            </tr>
+                        }
+                    </tbody>
+            </table>
+
+        </div>
+    </div>
+</div> 

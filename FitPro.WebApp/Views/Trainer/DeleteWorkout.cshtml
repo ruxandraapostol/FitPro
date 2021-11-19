@@ -1,0 +1,50 @@
+﻿@model FitPro.BusinessLogic.DeleteWorkoutModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+<div class="text-center">
+    <div class="display-4">Delete Workout</div>
+</div>
+
+<div class="home-container">
+    <form asp-action="DeleteWorkout" asp-controller="Trainer">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-8">
+                <input asp-for="IdTrainer" hidden/>
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" readonly />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label>
+                    <input asp-for="Author" class="form-control" readonly />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LinkUrl" class="control-label"></label>
+                    <input asp-for="LinkUrl" class="form-control" readonly />
+                    <span asp-validation-for="LinkUrl" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4">
+                <iframe id="workout-video-edit" src="@Model.LinkUrl" title="@Model.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TrainerPassword" class="control-label"></label>
+            <input asp-for="TrainerPassword" type="password" class="form-control" />
+            <span asp-validation-for="TrainerPassword" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Delete Workout" class="btn brown-btn" />
+        </div>
+    </form>
+
+    <div class="text-center">
+        <a asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Back to edit workouts list.</div></a>
+        <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+    </div>
+</div>

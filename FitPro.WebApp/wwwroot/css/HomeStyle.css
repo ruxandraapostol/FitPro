@@ -1,0 +1,291 @@
+﻿body {
+    background-color: #fff1e6;
+    font-family: 'Playfair Display', serif;
+    color: #cb997e;
+}
+
+a:hover {
+    text-decoration-color: #cb997e;
+}
+
+.crem-text {
+    color: #cb997e;
+    font-family: 'Playfair Display', serif;
+}
+
+a {
+    color: #cb997e;
+}
+
+
+.home-container {
+    margin-top: 2rem;
+}
+
+.middle-container {
+    display: flex;
+    vertical-align: central;
+    justify-content: center;
+}
+
+.display-6 {
+    margin-bottom: 1rem;
+    font-size: 2.7rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.brown-container {
+    width: 25rem;
+    height: 38rem;
+    background-color: #cb997e;
+}
+
+.buttons-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.brown-btn {
+    color: #fff1e6;
+    background-color: #cb997e;
+    border-color: #cb997e;
+}
+
+.brown-text {
+    color: #cb997e;
+}
+
+#login-image {
+    width: 25rem;
+    height: 40rem;
+    margin-left: -2rem;
+    padding-top: 2rem;
+}
+
+#home-image {
+    width: 25rem;
+    height: 40rem;
+    margin-left: 2rem;
+    padding-top: 2rem;
+}
+
+#user-image {
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 50%;
+}
+
+.profile-image-container {
+    width: 15rem;
+    height: 15rem;
+    background-color: #cb997e;
+    display: flex;
+    align-content: center;
+}
+
+.profile-image-container img {
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.register-container {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.add-user-container {
+    margin-bottom: 3rem;
+}
+
+.workout-container {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.program-workout-container {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.workout-box {
+    margin: 2rem;
+    width: 15rem;
+    min-width: 200px;
+    height: 18rem;
+    color: #fff1e6;
+    background-color: #cb997e;
+    text-align: center;
+    border-radius: 5%;
+    padding: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+#workout-video {
+    position: relative;
+    height: 70%;
+    width: 100%;
+    border-radius: 5%;
+}
+
+.workout-title {
+    margin-top: 0.5rem;
+    font-size:large;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.workout-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.workout-container a {
+    color: #fff1e6;
+}
+
+.workout-font {
+    font-size: 20px;
+}
+
+.workout-container-detail {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#workout-video-detail {
+    width: 90%;
+    height: 35rem;
+}
+
+#workout-video-edit {
+    position: relative;
+    height: 90%;
+    width: 100%;
+    border-radius: 5%;
+    margin-top: 0.5rem;
+}
+
+.my-table-header {
+    margin-bottom: 2rem;
+}
+
+.my-table-footer {
+    margin-top: 2rem;
+}
+
+.brown-container-friends {
+    width: 20rem;
+    min-height: 20rem;
+    max-height: 30rem;
+    background-color: #cb997e;
+    border-radius: 5%;
+}
+
+.search-new-friends {
+    position: sticky;
+    top: 0;
+    padding: 1rem 1rem 1rem 1rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.possibleFriendsList {
+    color: #fff1e6;
+    font-size: 20px;
+}
+
+    .possibleFriendsList a {
+        color: #fff1e6;
+        font-size: 12px;
+    }
+
+.friendshipRequest {
+    margin-bottom: 5rem;
+    width: 20rem;
+    min-height: 10rem;
+    max-height: 20rem;
+    background-color: #cb997e;
+    color: #fff1e6;
+    padding: 1rem;
+    border-radius: 5%;
+}
+
+.possibleFriendsList {
+    margin: 1rem;
+}
+
+.button-status-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.friendsTable {
+    font-size: 20px;
+    margin-top:2rem;
+}
+
+i {
+    font-size:24px;
+    cursor: pointer;
+}
+
+.iconCenterContainer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.horizontalLine {
+    width: 100%;
+    border: solid #cb997e;
+}
+
+.program-workout-container p {
+    width: 100%;
+}
+
+.recipe-image {
+    position: relative;
+    height: 70%;
+    width: 100%;
+}
+
+    .recipe-image img,
+    .recipe-image iframe{
+        margin: auto;
+        max-height: 100%;
+        width: 95%;
+        height: 100%;
+        border-radius: 5%;
+    }
+
+.recommandations-buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.recommandation-media {
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+}
+
+.recommandation-media img {
+    width: 100%;
+    height: 100%;
+}

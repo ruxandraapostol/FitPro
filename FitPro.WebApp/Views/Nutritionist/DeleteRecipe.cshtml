@@ -1,0 +1,49 @@
+﻿@model FitPro.BusinessLogic.DeleteRecipeModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser 
+
+<div class="home-container">
+    <form asp-action="DeleteRecipe" asp-controller="Nutritionist">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col my-auto">
+                <div class="text-center">
+                    <div class="display-4">Delete Workout</div>
+                </div>
+
+                <input asp-for="IdNutritionist" hidden />
+                <input asp-for="IdRecipe" class="form-control" readonly hidden />
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" readonly />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NutritionistPassword" class="control-label"></label>
+                    <input asp-for="NutritionistPassword" type="password" class="form-control" />
+                    <span asp-validation-for="NutritionistPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Delete Recipe" class="btn brown-btn" />
+                </div>
+                <div class="text-center">
+                    <a asp-controller="Nutritionist" asp-action="AlimentsList" asp-route-currentPage="1"><div class="crem-text">Back to Alimets List.</div></a>
+                    <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+                </div>
+            </div>
+
+
+            <div class="col">
+                <div class="float-right">
+                    <div class="brown-container">
+                        <img id="login-image" src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = Model.IdRecipe })" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>

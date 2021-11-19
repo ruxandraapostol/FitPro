@@ -1,0 +1,105 @@
+﻿@model List<FitPro.BusinessLogic.SavedItemModel>
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<input id="currentUserId" value="@CurrentUser.Id" hidden />
+
+<div class="home-container">
+    <div class="display-4 text-center">My Saved Items</div>
+
+    <div class="home-container">
+
+
+        <div class="middle-container">
+            @if (Model == null || Model.Count() == 0)
+            {
+                <div id="empty-box"><img src="~/image/empty-box.png" /></div>
+            }
+            else
+            {
+                <div id="empty-box" style="display: none"><img src="~/image/empty-box.png" /></div>
+
+            }
+        </div>
+
+        <div class="workout-container" id="savedList">
+            @foreach (var elem in @Model)
+            {
+                <div class="workout-box" id="savedItem_@elem.IdSavedItem">
+                    @if (elem.IsWorkout)
+                    {
+                        <div class="workout-content">
+                            <div class="detail" data-link="@elem.Link" onclick="detailWorkout(event)">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="UnsaveItem" data-iditem="@elem.IdSavedItem" onclick="unsave(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                            <div class="ShareItem" data-iditem="@elem.IdSavedItem" data-iduser="@CurrentUser.Id" onclick="shareItem(event)">
+                                <i class="fas fa-share"></i>
+                            </div>
+                        </div>
+                        <div class="workout-title"><p>@elem.Name</p></div>
+                        <iframe id="workout-video" src="@elem.Link" title="@elem.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    }
+                    else
+                    {
+                        <div class="workout-content">
+                            <div data-idrecipe="@elem.IdSavedItem" onclick="detailRecipe(event)">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div id="unsave_@elem.IdSavedItem" class="UnsaveItem" data-iditem="@elem.IdSavedItem" onclick="unsave(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                            <div class="ShareItem" data-iditem="@elem.IdSavedItem" data-iduser="@CurrentUser.Id" onclick="shareItem(event)">
+                                <i class="fas fa-share"></i>
+                            </div>
+                        </div>
+                        <div class="workout-title"><p>@elem.Name</p></div>
+                        <div class="recipe-image"><img src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = elem.IdSavedItem })" /></div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script id="savedTemplate" type="text/x-handlebars-template">
+        <div class="workout-box" id="savedItem_{{idSavedItem}}">
+            {{#if isWorkout}}
+            <div class="workout-content">
+                <div class="detail" data-link="{{link}}" onclick="detailWorkout(event)">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="UnsaveItem" data-iditem="{{idSavedItem}}" onclick="unsave(event)">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div class="ShareItem" data-iditem="{{idSavedItem}}" data-iduser="{{idCurrentUser}}" onclick="shareItem(event)">
+                    <i class="fas fa-share"></i>
+                </div>
+            </div>
+            <div class="workout-title"><p>{{name}}</p></div>
+            <iframe id="workout-video" src="{{link}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            {{else}}
+        <div class="workout-content">
+            <div data-idrecipe="{{idSavedItem}}" onclick="detailRecipe(event)">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div id="unsave_{{idSavedItem}}" class="UnsaveItem" data-idrecipe="{{idSavedItem}}" data-iduser="@CurrentUser.Id" onclick="unsaveRecipe(event)">
+                <i class="fas fa-bookmark"></i>
+            </div>
+            <div class="ShareItem" data-iditem="{{idSavedItem}}" data-iduser="{{idCurrentUser}}" onclick="shareItem(event)">
+                <i class="fas fa-share"></i>
+            </div>
+        </div>
+            <div class="workout-title"><p>{{name}}</p></div>
+            <div class="recipe-image"><img src="/Nutritionist/RecipePic?recipeId={{idSavedItem}}" /></div>
+            {{/if}}
+        </div>
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="@Url.Content("/js/Friends/SavedScript.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

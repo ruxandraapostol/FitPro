@@ -1,0 +1,61 @@
+﻿@model FitPro.BusinessLogic.AdminDeleteUserModel
+
+<div class="container home-container">
+    <div class="row">
+
+        <div class="col">
+            <div class="brown-container">
+                <img src="~/image/deletePhoto.jpg" />
+            </div>
+        </div>
+
+        <div class="col my-auto">
+            <div class="text-center">
+                <div class="display-4">Delete Account</div>
+                <h4>Are you sure you want to delete this account? If you delete this account you will not be able to recover it.</h4>
+            </div>
+            <form asp-action="AdminDeleteUser" asp-controller="Admin">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdAdmin" />
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" readonly />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" readonly />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" readonly />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Role" class="control-label"></label>
+                    <input asp-for="Role" class="form-control" readonly />
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AdminPassword" class="control-label"></label>
+                    <input asp-for="AdminPassword" type="password" class="form-control" />
+                    <span asp-validation-for="AdminPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete account" class="btn brown-btn" />
+                </div>
+            </form>
+
+            <div class="text-center">
+                <a asp-controller="Admin" asp-action="UsersList"><div class="brown-text">Back to users list.</div></a>
+                <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+            </div>
+        </div>
+    </div>
+</div>

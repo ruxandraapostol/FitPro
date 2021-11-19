@@ -1,0 +1,181 @@
+﻿@model List<FitPro.BusinessLogic.FriendRecommand>
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<input id="currentUserId" value="@CurrentUser.Id" hidden />
+<div class="home-container">
+    <div class="display-4 text-center">
+        My Recommandations
+    </div>
+
+    <div class="recommandations-buttons-container">
+        <div class="btn brown-btn" id="friendsRecommandationsBtnOn" style="margin-right:0.3rem">Friends Recommandations</div>
+        <div class="btn btn-light" id="friendsRecommandationsBtnOff" style="display:none; margin-right:0.3rem; color: #cb997e">Friends Recommandations</div>
+        <div class="btn btn-light" id="myRecommandationsBtnOff" style="margin-left: 0.3rem; color: #cb997e">My Recommandations</div>
+        <div class="btn brown-btn" id="myRecommandationsBtnOn" style="display: none; margin-left: 0.3rem; ">My Recommandations</div>
+
+    </div>
+
+    <div id="RecommandationList">
+        @foreach (var recommandation in Model)
+        {
+        <div class="row" style="margin-top: 2rem">
+            <div class="col">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName=@recommandation.FriendUserName" style="border-radius: 50%" />
+                </div>
+            </div>
+            @if (recommandation.IsWorkout)
+            {
+                <div class="col my-auto">
+                    <p>
+                        <span class="details" style="cursor:pointer" data-username="@recommandation.FriendUserName" onclick="friendDetail(event)">
+                            @recommandation.FriendUserName
+                        </span> shared with you 
+                        <span style="cursor:pointer" data-link="@recommandation.Link" onclick="detailWorkout(event)">
+                        "@recommandation.Name"
+                        </span> 
+                         on @recommandation.Date
+                    </p>
+                    <p>"@recommandation.Comment"</p>
+                </div>
+                <div class="col my-auto">
+                    <div class="recommandation-media float-right">
+                        <iframe id="workout-video" style="height: 100%" src="@recommandation.Link" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col my-auto">
+                    <p>
+                        <span class="details" style="cursor:pointer" data-username="@recommandation.FriendUserName" onclick="friendDetail(event)">
+                            @recommandation.FriendUserName
+                        </span> shared with you
+                        <span style="cursor:pointer" data-idrecipe="@recommandation.ItemId" onclick="detailRecipe(event)">
+                            "@recommandation.Name"
+                        </span>
+                        on @recommandation.Date
+                    </p>
+                    <p>"@recommandation.Comment"</p>
+                </div>
+                <div class="col my-auto">
+                    <div class="recommandation-media float-right">
+                        <img src="/Nutritionist/RecipePic?recipeId=@recommandation.ItemId" />
+                    </div>
+                </div>
+            }
+        </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+    <script id="friendRecommandationsTemplate" type="text/x-handlebars-template">
+        <div class="row" style="margin-top: 2rem">
+            <div class="col">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName={{friendUserName}}" style="border-radius: 50%" />
+                </div>
+            </div>
+            {{#if isWorkout}}
+        <div class="col my-auto">
+            <span class="details" style="cursor:pointer" data-username="{{friendUserName}}" onclick="friendDetail(event)">
+                {{friendUserName}}
+            </span>
+            <span> shared with you</span>
+            <span style="cursor:pointer" data-link="{{itemLink}} " onclick="detailWorkout(event)">
+                "{{itemName}}"
+            </span>
+            <span>
+                on {{date}}
+            </span>
+            <p>"{{comment}}"</p>
+        </div>
+            <div class="col my-auto">
+                <div class="recommandation-media float-right">
+                    <iframe id="workout-video" style="height: 100%" src="{{itemLink}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            {{else}}
+            <div class="col my-auto">
+                <span class="details" style="cursor:pointer" data-username="{{friendUserName}}" onclick="friendDetail(event)">
+                    {{friendUserName}}
+                </span>
+                <span> shared with you</span>
+                <span style="cursor:pointer" data-idrecipe="{{itemId}}" onclick="detailRecipe(event)">
+                    "{{itemName}}"
+                </span>
+                <span>
+                    on {{date}}
+                </span>
+                <p>"{{comment}}"</p>
+            </div>
+            <div class="col my-auto">
+                <div class="recommandation-media float-right">
+                    <img src="/Nutritionist/RecipePic?recipeId={{itemId}}" />
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </script>
+
+    <script id="myRecommandationsTemplate" type="text/x-handlebars-template">
+        <div class="row" style="margin-top: 2rem">
+            <div class="col">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName={{friendUserName}}" style="border-radius: 50%" />
+                </div>
+            </div>
+
+            {{#if isWorkout}}
+        <div class="col my-auto">
+            <span>
+                You shared with
+            </span>
+            <span class="details" style="cursor:pointer" data-username="{{friendUserName}}" onclick="friendDetail(event)">
+                {{friendUserName}}
+            </span>
+            <span> shared with you</span>
+            <span style="cursor:pointer" data-link="{{itemLink}} " onclick="detailWorkout(event)">
+                "{{itemName}}"
+            </span>
+            <span>
+                on {{date}}
+            </span>
+            <p>"{{comment}}"</p>
+        </div>
+            <div class="col my-auto">
+                <div class="recommandation-media float-right">
+                    <iframe id="workout-video" style="height: 100%" src="{{itemLink}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            {{else}}
+        <div class="col my-auto">
+            <span>
+                You shared with
+            </span>
+            <span class="details" style="cursor:pointer" data-username="{{friendUserName}}" onclick="friendDetail(event)">
+                {{friendUserName}}
+            </span>
+            <span style="cursor:pointer" data-idrecipe="{{itemId}}" onclick="detailRecipe(event)">
+                "{{itemName}}"
+            </span>
+            <span>
+                on {{date}}
+            </span>
+            <p>"{{comment}}"</p>
+        </div>
+            <div class="col my-auto">
+                <div class="recommandation-media float-right">
+                    <img src="/Nutritionist/RecipePic?recipeId={{itemId}}" />
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="@Url.Content("/js/Friends/RecommandationsScript.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

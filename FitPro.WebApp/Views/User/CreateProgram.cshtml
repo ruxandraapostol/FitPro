@@ -1,0 +1,60 @@
+﻿@model FitPro.BusinessLogic.CreateProgramModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="container home-container">
+    <div class="row">
+        <div class="col my-auto">
+            <div class="text-center">
+                <div class="display-4">Create a new FitProProgram</div>
+            </div>
+            <div class="home-container">
+                <p>
+                we want to create a special training program for your goals. for this we need you to
+                tell us what types of training you want to practice or what muscle groups you want 
+                to train and the period of time you want to allocate.
+                </p>
+
+            <form asp-action="CreateProgram" asp-controller="User" asp-route-userId="@CurrentUser.Id">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="TimePeriod" class="control-label">Time period (weeks)</label>
+                    <select asp-for="TimePeriod" class="form-control">
+                        <option>2</option>
+                        <option>4</option>
+                        <option>6</option>
+                        <option>8</option>
+                    </select>
+                    <span asp-validation-for="TimePeriod" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SelectedCategories" class="control-label">Workout categories</label>
+                    <select id="select-categories" asp-for="SelectedCategories" multiple="multiple" class="form-control" asp-items="@(new SelectList(@Model.Categories, "Value", "Text"))"></select>
+                    <span asp-validation-for="SelectedCategories" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn brown-btn" />
+                </div>
+            </form>
+
+            <div class="text-center">
+                <a asp-action="Index" asp-controller="Home"><div class="brown-text">Back to home.</div></a>
+            </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="float-right">
+                <div class="brown-container">
+                    <img src="https://i.pinimg.com/564x/eb/9b/09/eb9b0905c9aeaafffab7136f6069dba0.jpg" id="login-image" />"
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="@Url.Content("/js/multiple-select.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

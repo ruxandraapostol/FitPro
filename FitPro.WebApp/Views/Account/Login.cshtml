@@ -1,0 +1,40 @@
+﻿@model FitPro.BusinessLogic.LoginModel
+
+
+<div class="container home-container">
+    <div class="row">
+        <div class="col my-auto">
+            <div class="text-center">
+                <div class="display-4">Login</div>
+            </div>
+            <form asp-action="Login" asp-controller="Account">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn brown-btn" />
+                </div>
+            </form>
+
+            <div class="text-center">
+                <a asp-action="Register"><div class="brown-text">Not a member yet? Register now.</div></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="float-right">
+                <div class="brown-container">
+                    <img src="~/image/login.jpg" id="login-image"/>"
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

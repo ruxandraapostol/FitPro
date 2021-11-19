@@ -1,0 +1,80 @@
+﻿@model FitPro.BusinessLogic.SpecialProfileModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+
+<div class="home-container">
+    <div class="display-6 text-center">My Profile</div>
+    <form asp-action="EditSpecialProfile" asp-controller="Account" enctype="multipart/form-data">
+      
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserImage" class="control-label"></label>
+                    <input asp-for="UserImage" type="file" class="form-control" accept="image/*"/>
+                    <span asp-validation-for="UserImage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4 my-auto mr-auto">
+                <div class="float-right">
+                    <div class="profile-image-container">
+                        <img src="@Url.ActionLink("ProfilePicByUserName", "Account", new { userName = CurrentUser.UserName })" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Role" class="control-label"></label>
+            <input asp-for="Role" class="form-control" readonly/>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ShortDescription" class="control-label"></label>
+            <input asp-for="ShortDescription" class="form-control" />
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LongDescription" class="control-label"></label>
+            <input asp-for="LongDescription" class="form-control" />
+            <span asp-validation-for="LongDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="buttons-container">
+            <div class="form-group">
+                <input type="submit" value="Edit Profile" class="btn brown-btn" />
+            </div>
+
+            <a class="btn brown-btn" asp-controller="Account" asp-action="ChangePassword" asp-route-id="@CurrentUser.Id" style="max-height: 38px">Change Password</a>
+            <a class="btn brown-btn" asp-controller="Account" asp-action="DeleteAccount" asp-route-id="@CurrentUser.Id" style="max-height: 38px">DeleteAccount</a>
+        </div>
+
+        <div class="text-center">
+            <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,83 @@
+﻿@model FitPro.BusinessLogic.DetailRecipeModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="text-center display-4">
+    @Model.Name
+</div>
+<div class="row justify-content-around">
+    <div class="col-5">
+        <p>
+            <i class="fas fa-hourglass"></i>
+            Time: @Model.Time
+        </p>
+        <p>
+            <i class="fas fa-charging-station"></i>
+            Calories: @Model.Calories
+        </p>
+    </div>
+    <div class=".col-5">
+        <p>Author: <a asp-controller="Account" asp-action="Details" asp-route-userName="@Model.NutritionistName">@Model.NutritionistName</a></p>
+        <p>Category: @Model.CategoryName</p>
+    </div>
+</div>
+
+<div class="home-container workout-font">
+    <div class="row">
+        <div class="col">
+
+            <div class="ingredientsList">
+                <div class="display-6">Ingredients</div>
+                <hr />
+            </div>
+            @foreach (var ingredient in Model.IngredientsList)
+            {
+                <p>- @ingredient</p>
+            }
+        </div>
+        <div class="col">
+            <div class="float-right">
+                <div class="brown-container">
+                    <img id="login-image" src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = Model.IdRecipe })"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="preparationList" style="width: 100%">
+            <div class="display-6">Preparation</div>
+            <hr />
+        </div>
+        <div class="row justify-content-around">
+            <ol>
+                @foreach (var instruction in Model.PreparationList)
+                {
+                    <li>@instruction</li>
+                }
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center">
+    @if (Model.FromSaved)
+    {
+        <a asp-controller="User" asp-action="SavedItems" asp-route-userId="@CurrentUser.Id">
+            <div class="brown-text">Back to your SavedItems List.</div>
+        </a>
+    }
+    else if (Model.FromShare)
+    {
+        <a asp-controller="User" asp-action="MyRecommandation" asp-route-currentUserId="@CurrentUser.Id">
+            <div class="brown-text">Back to your Recommandations List.</div>
+        </a>
+    }
+    <a asp-controller="Nutritionist" asp-action="NutritionistRecipesList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Back to Recipes List.</div></a>
+    <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to Home.</div></a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

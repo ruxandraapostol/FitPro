@@ -1,0 +1,93 @@
+﻿@model FitPro.BusinessLogic.RegularProfileModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+@inject FitPro.Entities.DropDowns DropDown
+
+
+<div class="home-container">
+    <div class="display-6 text-center">My Profile</div>
+    <form asp-action="EditRegularProfile" asp-controller="Account" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserImage" class="control-label"></label>
+                    <input asp-for="UserImage" type="file" class="form-control" />
+                    <span asp-validation-for="UserImage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4 my-auto mr-auto">
+                <div class="float-right">
+                    <div class="profile-image-container">
+                        <img src="@Url.ActionLink("ProfilePicByUserName", "Account", new { userName = CurrentUser.UserName })" />
+                    </div>
+                </div>               
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BirthDay" class="control-label"></label>
+            <input asp-for="BirthDay" class="form-control" />
+            <span asp-validation-for="BirthDay" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Weight" class="control-label">Weight (Kg)</label>
+            <input asp-for="Weight" class="form-control" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Height" class="control-label">Height (Cm)</label>
+            <input asp-for="Height" class="form-control" type="number" />
+            <span asp-validation-for="Height" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="GenderId" class="control-label"></label>
+            <select asp-for="GenderId" class="form-control" asp-items="@DropDown.Genders">
+                <option>
+                    @if (Model != null && Model.GenderId != null)
+                    {
+                        @Model.GenderId
+                    }
+                </option>
+            </select>
+            <span asp-validation-for="GenderId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="buttons-container">
+            <div class="form-group">
+                <input type="submit" value="Edit Profile" class="btn brown-btn" />
+            </div>
+
+            <a class="btn brown-btn" asp-controller="Account" asp-action="ChangePassword" asp-route-id="@CurrentUser.Id" style="max-height: 38px">Change Password</a>
+            <a class="btn brown-btn" asp-controller="Account" asp-action="DeleteAccount" asp-route-id="@CurrentUser.Id" style="max-height: 38px">DeleteAccount</a>
+        </div>
+
+        <div class="text-center">
+            <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+        </div>
+    </form>
+</div>

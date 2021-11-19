@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="container home-container">
+
+    <div class="row">
+        <div class="col">
+            <div class="brown-container">
+                <img src="https://i.pinimg.com/564x/b0/88/eb/b088eb002329358c913d31b13f5f3d88.jpg" id="home-image"/>
+            </div>
+        </div>
+
+        <div class="col my-auto">
+            <div class="text-center">
+                <div class="display-6">
+                    We are creating healthy habits not obligations or restrictions.
+                </div>
+                <h4>
+                    Start a FitProProgram, track your nutrition or check our recipes.
+                </h4>
+            </div>
+            <div class="buttons-container">
+                <a asp-action="TrainerWorkoutsList" asp-controller="Trainer" asp-route-currentUser="@CurrentUser.Id" class ="btn brown-btn"><h4>Workouts</h4></a>
+                <a asp-action="AlimentsList" asp-controller="Nutritionist" asp-route-currentPage="1" class="btn brown-btn"><h4>Check Nutrition</h4></a>
+                <a asp-action="NutritionistRecipesList" asp-controller="Nutritionist" asp-route-currentId="@CurrentUser.Id" class ="btn brown-btn"><h4>Recipes</h4></a>
+            </div>
+        </div>
+    </div>
+</div>

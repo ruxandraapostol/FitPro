@@ -1,0 +1,59 @@
+﻿@model List<FitPro.BusinessLogic.FitProProgramModel>
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+
+
+
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="row">
+        <div class="col">
+            <div class="brown-container">
+                <img src="~/image/fitProProgram.jpg" id="home-image" />
+            </div>
+        </div>
+        <div class="col text-center my-auto">
+            <div class="display-4 text-center">
+               My FitProPrograms
+            </div>
+            <div class="home-container">
+                <div class="no-fitProProgram">
+                    <p>You have no active FitProProgram. Let's create a new one now.</p>
+                    <a asp-action="CreateProgram" asp-controller="User" asp-route-userId="@CurrentUser.Id" class="btn brown-btn">Create a program</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="home-container">
+        <div class="display-4 text-center">My FitProPrograms</div>
+        <div class="home-container">
+            <div style="width:100%">
+                <a asp-action="CreateProgram" asp-controller="User" asp-route-userId="@CurrentUser.Id" class="btn brown-btn">Create a new program</a>
+            </div>
+            <div class="workout-container">
+                @foreach (var fitProgram in Model)
+                {
+                    <a asp-controller="User" asp-action="CurrentFitProProgram" asp-route-currentUserId="@CurrentUser.Id" asp-route-programId="@fitProgram.ProgramId">
+                        <div class="workout-box">
+                            <p>
+                                Categories:
+                                @foreach (var category in fitProgram.Categories)
+                                {
+                                    <span>#@category </span>
+                                }
+                            </p>
+                            <p style="margin: 0"> Starting day: @fitProgram.StartDay.ToShortDateString()</p>
+                            <iframe id="workout-video" src="@fitProgram.LinkUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </a>
+                }
+            </div>
+            <div class="text-center crem-text">
+                <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to Home</div></a>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,85 @@
+﻿@model FitPro.BusinessLogic.AlimentsListModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+
+<div class="display-4 text-center">Aliments List</div>
+<input asp-for="CurrentPage" id="currentPage-A" hidden />
+<input asp-for="SearchString" id="searchString-A" hidden />
+<input id="currentUserRole" value="@CurrentUser.Role" hidden />
+<input id="currentUserId" value="@CurrentUser.Id" hidden />
+
+
+<div class="home-container">
+    <div class="row">
+        <div class="col">
+            <div class="input-group rounded">
+                <input asp-for="SearchString" type="text" id="search-input-A" placeholder="Search for an aliment" />
+                <div class="btn brown-btn" id="search-button-A">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
+
+        @if (CurrentUser.Role == "Nutritionist")
+        {
+        <div class="col">
+            <div class="add-user-container float-right">
+                <a asp-controller="Nutritionist" asp-action="AddAliment" class="btn brown-btn">Add Aliment</a>
+            </div>
+        </div>
+        }
+    </div>
+
+    <table class="table text-center brown-text">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Calories</th>
+                <th>Proteins</th>
+                <th>Carbos</th>
+                <th>Fats</th>
+                @if (CurrentUser.Role == "Nutritionist")
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody id="alimentsList">
+            @foreach (var aliment in Model.AlimentList)
+            {
+                <tr>
+                    <td>@aliment.Name</td>
+                    <td>@aliment.Calories</td>
+                    <td>@aliment.Protein</td>
+                    <td>@aliment.Carbo</td>
+                    <td>@aliment.Fat</td>
+                    @if (CurrentUser.Role == "Nutritionist")
+                    {
+                        <td>
+                            <a asp-action="EditAliment" asp-controller="Nutritionist" asp-route-alimentName="@aliment.Name">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="DeleteAliment" asp-controller="Nutritionist" asp-route-alimentName="@aliment.Name" asp-route-currentId="@CurrentUser.Id">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.AlimentList.Count() == 15)
+    {
+        <div class="text-center" id="showMore">Show more aliments</div>
+    }
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="@Url.Content("/js/Aliments/AlimentSearch.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/js/Aliments/InfiniteScroll.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

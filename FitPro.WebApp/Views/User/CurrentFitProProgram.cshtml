@@ -1,0 +1,91 @@
+﻿@model FitPro.BusinessLogic.FitProProgramModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<input id="currentUserId" value="@CurrentUser.Id" hidden />
+<input id="programId" value="@Model.ProgramId" hidden />
+
+<div class="home-container">
+    <div class="display-4 text-center">My FitProProgram</div>
+    <div class="home-container workout-font">
+        <div class="row">
+            <div class="col">
+                <p style="margin: 0">
+                    Categories:
+                    @foreach (var category in Model.Categories)
+                    {
+                        <span>#@category </span>
+                    }
+                </p>
+                <p style="margin: 0"> Starting day: @Model.StartDay.ToShortDateString()</p>
+                <p style="margin: 0"> Current day: @Model.CurrentDay</p>
+            </div>
+            <div class="col">
+                <div class="float-right">
+                    <img src="~/image/fitness.png" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="home-container">
+            @{
+                var dayRow = 0;
+                <div class="program-workout-container" id="ProgramWorkouContainer">
+                    @foreach (var workout in Model.WorkoutsList)
+                    {
+                        if (workout.Day > dayRow)
+                        {
+                            dayRow = workout.Day;
+                            if (dayRow % 4 == 1 && dayRow != 1)
+                            {
+                                <p>Day @(workout.Day - 1)</p>
+                                <hr style="width: 100%" />
+                                <i class="fas fa-bed" style="font-size: 100px"></i>
+                            }
+
+                            if (workout.Day < Model.CurrentDay)
+                            {
+                                <p style="color: darkgray;">Day @workout.Day</p>
+                                <hr style="width: 100%" />
+                            }
+                            else
+                            {
+                                <p>Day @workout.Day</p>
+                                <hr style="width: 100%" />
+                            }
+                        }
+
+                        <div class="workout-box">
+                            <div class="workout-title" style="cursor:pointer" data-link="@workout.LinkUrl" onclick="detailWorkout(event)">
+                                <p>@workout.Name</p>
+                            </div>
+                            <iframe id="workout-video" src="@workout.LinkUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    }
+                </div>
+                <input id="dayRow" value="@dayRow" hidden />
+            }
+        </div>
+    </div>
+
+    <div class="text-center crem-text">
+        <a asp-controller="User" asp-action="FitProProgram" asp-route-userId="@CurrentUser.Id"><div class="brown-text">Back to your FitProPrograms</div></a>
+        <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to Home</div></a>
+    </div>
+</div>
+
+@section Scripts {
+    <script id="ProgramWorkoutTemplate" type="text/x-handlebars-template">
+        
+        <div class="workout-box">
+            <div class="detailWorkout" data-link="{{linkUrl}}" onclick="detailWorkout(event)">
+                <div class="workout-title"><p>{{name}}</p></div>
+            </div>
+            <iframe id="workout-video" src="{{linkUrl}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="@Url.Content("/js/FitProProgram/ProgramWorkouts.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

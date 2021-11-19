@@ -1,0 +1,50 @@
+﻿@model FitPro.BusinessLogic.LoginModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="container home-container">
+    <div class="row">
+
+        <div class="col">
+            <div class="brown-container">
+                <img src="~/image/deleteProfile.jpg" id="home-image" />
+            </div>
+        </div>
+
+        <div class="col my-auto">
+            <div class="text-center">
+                <div class="display-4">Delete Account</div>
+                <h4>Are you sure you want to delete this account? If you delete an account you will not be able to recover it.</h4>
+            </div>
+            <form asp-action="DeleteAccount" asp-controller="Account">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete account" class="btn brown-btn" />
+                </div>
+            </form>
+
+            <div class="text-center">
+                @if (CurrentUser.Role == "Regular")
+                {
+
+                    <a asp-controller="Account" asp-action="EditRegularProfile" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Back to MyProfile.</div></a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="EditSpecialProfile" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Back to MyProfile.</div></a>
+                }
+                <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+            </div>
+        </div>
+    </div>
+</div>
+

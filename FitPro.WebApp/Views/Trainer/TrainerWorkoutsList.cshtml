@@ -1,0 +1,202 @@
+﻿@model FitPro.BusinessLogic.WorkoutsListModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="display-4 text-center">Workouts List</div>
+
+<input id="CurrentUserRole" value="@CurrentUser.Role" hidden />
+<input id="CurrentUserId" value="@CurrentUser.Id" hidden />
+
+<div class="home-container">
+    <div class="my-table-header">
+
+        <div class="row">
+            <div class="col">
+                <div id="addFilter" class="workout-font" style="cursor:pointer">
+                    Click here to add some filters
+                </div>
+            </div>
+            @if (CurrentUser.Role == "Trainer")
+            {
+                <div class="col">
+                    <div class="float-right" style="margin-bottom: 2rem">
+                        <a asp-controller="Trainer" asp-action="AddWorkout" class="btn brown-btn">Add Workout</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="WorkoutFilters" style="display:none">
+            <div class="row">
+                <div class="col my-auto">
+                    <div class="d-flex justify-content-center">
+                        <div class="input-group rounded">
+                            <input asp-for="FilterMore.SearchString" type="text" id="search-input-W" />
+                            <div class="btn brown-btn" id="search-button-W" disablee>
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col my-auto">
+                    <p>
+                        Add categories
+                        <select id="select-categories-W" style="width: 60%" asp-for="FilterMore.SelectedCategories" multiple="multiple" class="form-control" asp-items="@(new SelectList(@Model.FilterMore.Categories, "Value", "Text"))"></select>
+                    </p>
+
+                    <p style="margin-top: 1rem">
+                        Add trainers
+                        <select id="select-trainers-W" style="width: 65%" asp-for="FilterMore.SelectedTrainers" multiple="multiple" class="form-control" asp-items="@(new SelectList(@Model.FilterMore.Trainers, "Value", "Text"))"></select>
+                    </p>
+                </div>
+
+                <div class="col">
+                    <div class="float-right">
+                        <p>
+                            Add sort
+                            <select id="select-sort-W" class="from-select" aria-label="Default select example">
+                                <option>None</option>
+                                <option value="Name Asscending">Asscending by Name</option>
+                                <option value="Name Descending">Descending by Name</option>
+                                <option value="Time Asscending">Asscending by Time</option>
+                                <option value="Time Descending">Descending by Time</option>
+                                <option value="Calo Asscending">Asscending by Burnt Calories</option>
+                                <option value="Calo Descending">Descending by Burnt Calories</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            Add time restrictions
+                            <select id="select-time" class="from-select" aria-label="Default select example">
+                                <option value="">None</option>
+                                <option value="0 10">0 - 10 min</option>
+                                <option value="10 20">10 - 20 min</option>
+                                <option value="20 30">20 - 30 min</option>
+                                <option value="30 60">30 - 60 min</option>
+                                <option value="60 90">60 - 90 min</option>
+                                <option value="90">More than 90 min</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            Add burned calories restrictions
+                            <select id="select-calories" class="from-select" aria-label="Default select example">
+                                <option value="">None</option>
+                                <option value="0 50">0 - 50</option>
+                                <option value="50 100">50 - 100</option>
+                                <option value="100 200">100 - 200</option>
+                                <option value="200 500">200 - 500</option>
+                                <option value="500">More than 500</option>
+                            </select>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="filterNow" class="workout-font text-center" style="cursor:pointer"><p>Filter</p></div>
+        </div>
+    </div>
+    <hr />
+
+    <div class="workout-container" id="workoutsList">
+        @foreach (var elem in @Model.WorkoutsList)
+        {
+            <div class="workout-box">
+                <div class="workout-content">
+                    <a asp-controller="Trainer" asp-action="DetailWorkout" asp-route-workoutLink="@elem.LinkUrl">
+                        <i class="fas fa-book-open"></i>
+                    </a>
+                    @if (CurrentUser.Role == "Trainer")
+                    {
+                        <a asp-controller="Trainer" asp-action="EditWorkout" asp-route-workoutLink="@elem.LinkUrl">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-controller="Trainer" asp-action="DeleteWorkout" asp-route-workoutLink="@elem.LinkUrl" asp-route-currentId="@CurrentUser.Id">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    }
+                    else if (CurrentUser.Role != null)
+                    {
+
+                        @if (elem.IsSaved)
+                        {
+                            <div id="unsave_@elem.IdWorkout" class="UnsaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="unsaveWorkout(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                            <div id="save_@elem.IdWorkout" style="display:none" class="SaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="saveWorkout(event)">
+                                <i class="far fa-bookmark"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="unsave_@elem.IdWorkout" style="display:none"  class="UnsaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="unsaveWorkout(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                            <div id="save_@elem.IdWorkout" class="SaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="saveWorkout(event)">
+                                <i class="far fa-bookmark"></i>
+                            </div>
+                        }
+
+                        <div class="ShareItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="shareWorkout(event)">
+                            <i class="fas fa-share"></i>
+                        </div>
+                    }
+
+                </div>
+                <div class="workout-title"><p>@elem.Name</p></div>
+                <iframe id="workout-video" src="@elem.LinkUrl" title="@elem.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+    <script id="workoutsTemplate" type="text/x-handlebars-template">
+        <div class="workout-box">
+            <div class="workout-content">
+                <div class="detailWorkout" data-link="{{linkUrl}}" onclick="detailWorkout(event)">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                {{#ifEquals role "Regular"}}
+                {{#if isSaved}}
+                <div id="unsave_{{idWorkout}}" class="UnsaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="unsaveWorkout(event)">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div id="save_{{idWorkout}}" style="display:none" class="SaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="saveWorkout(event)">
+                    <i class="far fa-bookmark"></i>
+                </div>
+                {{else}}
+                <div id="unsave_{{idWorkout}}" style="display:none"  class="UnsaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="unsaveWorkout(event)">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div id="save_{{idWorkout}}" class="SaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="saveWorkout(event)">
+                    <i class="far fa-bookmark"></i>
+                </div>
+                {{/if}}
+                <div class="ShareItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="shareWorkout(event)">
+                    <i class="fas fa-share"></i>
+                </div>
+                {{/ifEquals}}
+
+                {{#ifEquals role "Trainer"}}
+                <div class="editWorkout" data-link="{{linkUrl}}" onclick="editWorkout(event)">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="deleteWorkout" data-link="{{linkUrl}}" data-id="{{idUser}}" onclick="deleteWorkout(event)" asp-route-currentId="@CurrentUser.Id">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                {{/ifEquals}}
+
+            </div>
+            <div class="workout-title"><p>{{name}}</p></div>
+            <iframe id="workout-video" src="{{linkUrl}}" title="{{name}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="@Url.Content("/js/HandlerHelper.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/js/Workouts/PopulateWorkouts.js")" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

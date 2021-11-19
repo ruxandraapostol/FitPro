@@ -1,0 +1,89 @@
+﻿@model FitPro.BusinessLogic.RecommandItemModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+    <input id="currentUserId" value="@CurrentUser.Id" hidden />
+    <input id="itemId" value="@Model.IdItem" hidden />
+    <input id="fromPage" value="@Model.FromPage" hidden />
+
+    <div class="home-container">
+        <div class="display-4 text-center">
+            Share something you like with your friends
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="workout-box">
+                    <div class="workout-title">
+                        @Model.Name
+                    </div>
+                    @if (Model.IsWorkout)
+                    {
+                        <iframe id="workout-video" stytle="width:95%; height: 100%; margin: auto" src="@Model.Link" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    }
+                    else
+                    {
+                        <div class="recipe-image">
+                            <img src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = Model.IdItem })" />
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-8 my-auto">
+                <textarea id="commentId" style=" width: 100%; height: 15rem;" placeholder="Send a message..."></textarea>
+            </div>
+        </div>
+
+        <div class="row" style=" margin-bottom:2rem">
+            <div class="col">
+                <div class="input-group">
+                    <input type="text" id="search-input-Friends" placeholder="Search a friend from your list." />
+                    <div class="btn brown-btn" id="search-button-Friends">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="float-right">
+                    <button class="btn brown-btn" id="ShareBtn" onclick="shareContent()">Share</button>
+                </div>
+            </div>
+        </div>
+        <table class="table  text-center brown-text" id="shareFriendsList">
+            @foreach (var friend in Model.FriendsList)
+            {
+                <tr>
+                    <td class="m-auto">
+                        <img id="user-image" src="@Url.ActionLink("ProfilePicByuserName", "Account", new { userId = friend.UserName })" />
+                    </td>
+                    <td class="my-auto">
+                        @friend.UserName
+                    </td>
+                    <td class="my-auto">
+                        <input type="checkbox" data-username="@friend.UserName" style="width: 1.3rem; height: 1.3rem" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    @section Scripts {
+
+
+        <script id="shareTemplate" type="text/x-handlebars-template">
+            <tr>
+                <td class="m-auto">
+                    <img id="user-image" src="/Account/ProfilePicByUserName?userName={{friendName}}" />
+                </td>
+                <td class="my-auto">
+                    {{friendName}}
+                </td>
+                <td class="my-auto">
+                    <input type="checkbox" id="shareFriend_{{friendName}}" style="width: 1.3rem; height: 1.3rem" />
+                </td>
+            </tr>
+        </script>
+
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src="@Url.Content("/js/Friends/ShareScript.js")" type="text/javascript"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    }

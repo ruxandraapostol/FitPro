@@ -1,0 +1,34 @@
+﻿@model FitPro.BusinessLogic.DetailsTrainer
+
+<div class="home-container">
+    <div class="text-center display-4">@Model.UserName</div>
+    <div class="home-container">
+        <div class="row">
+            <div class="col-auto">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName=@Model.UserName" style="border-radius: 50%" />
+                </div>
+            </div>
+            <div class="col my-auto">
+                <p><i class="fas fa-signature"></i>   Name:  @Model.UserName</p>
+                <p><i class="fas fa-envelope-open-text"></i>   Email:  @Model.Email</p>
+                <p><i class="fas fa-code-branch"></i>   Contributions:  @Model.ContributionsTotal</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem">
+            <div style="width: 100%">
+                <div class="display-6">Some workouts</div>
+                <hr />
+            </div>
+            <div class="workout-container" id="savedList">
+                @foreach (var elem in Model.LastWorkouts)
+                {
+                    <div class="workout-box" id="savedItem">
+                        <div class="workout-title"><a asp-controller="Trainer" asp-action="DetailWorkout" asp-route-workoutLink="@elem.LinkUrl">@elem.Name</a></div>
+                            <iframe id="workout-video" src="@elem.LinkUrl" title="@elem.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div> 

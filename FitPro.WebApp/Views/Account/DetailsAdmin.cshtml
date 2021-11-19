@@ -1,0 +1,18 @@
+﻿@model FitPro.BusinessLogic.DetailsAdmin
+
+<div class="home-container">
+    <div class="text-center display-4">@Model.UserName</div>
+    <div class="home-container">
+        <div class="row">
+            <div class="col-auto">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName=@Model.UserName" style="border-radius: 50%" />
+                </div>
+            </div>
+            <div class="col my-auto">
+                <p><i class="fas fa-signature"></i>   Name:  @Model.UserName</p>
+                <p><i class="fas fa-envelope-open-text"></i>   Email:  @Model.Email</p>
+            </div>
+        </div>
+    </div>
+</div> 

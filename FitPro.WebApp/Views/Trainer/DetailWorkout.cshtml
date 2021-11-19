@@ -1,0 +1,65 @@
+﻿@model FitPro.BusinessLogic.DetailWorkoutModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+<div class="text-center display-4">
+    @Model.Name
+</div>
+
+<div class="home-container workout-font">
+    <p>@Model.Description</p>
+    <div class="row justify-content-around">
+        <div class="col-5">
+            <p>
+                <i class="fas fa-hourglass"></i>
+                Time: @Model.Time
+            </p>
+            <p>
+                <i class='fas fa-dumbbell'></i>
+                Calories: @Model.Calories
+            </p>
+        </div>
+        <div class=".col-5">
+            <p>Author: <a asp-controller="Account" asp-action="Details" asp-route-userName="@Model.AuthorTrainer">@Model.AuthorTrainer</a></p>
+            <p>Last Modified: <a asp-controller="Account" asp-action="Details" asp-route-userName="@Model.LastModifiedTrainer">@Model.LastModifiedTrainer</a></p>
+        </div>
+    </div>
+    <p>
+        Categories:
+        @foreach (var category in Model.Categories)
+        {
+            <span>#@category    </span>
+        }
+    </p>
+    <div class="workout-container-detail">
+        <iframe id="workout-video-detail" src="@Model.VideoLinkUrl" title="@Model.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="text-center">
+        @if (Model.ProgramId != Guid.Empty && Model.UserId != Guid.Empty)
+        {
+            <a asp-controller="User" asp-action="CurrentFitProProgram" asp-route-currentUserId="@Model.UserId" asp-route-programId="@Model.ProgramId">
+                <div class="brown-text">Back to Your FitProProgram.</div>
+            </a>
+        }
+        @if (Model.FromSaved)
+        {
+            <a asp-controller="User" asp-action="SavedItems" asp-route-userId="@CurrentUser.Id">
+                <div class="brown-text">Back to your SavedItems List.</div>
+            </a>
+        }
+        else if (Model.FromShare)
+        {
+            <a asp-controller="User" asp-action="MyRecommandation" asp-route-currentUserId="@CurrentUser.Id">
+                <div class="brown-text">Back to your Recommandations List.</div>
+            </a>
+        }
+        <a asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Back to Workouts List.</div></a>
+        <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to Home.</div></a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

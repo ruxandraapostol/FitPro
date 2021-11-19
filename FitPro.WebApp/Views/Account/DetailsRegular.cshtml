@@ -1,0 +1,67 @@
+﻿@model FitPro.BusinessLogic.DetailsRegular
+
+<div class="home-container">
+    <div class="text-center display-4">@Model.UserName</div>
+    <div class="home-container">
+        <div class="row">
+            <div class="col-auto">
+                <div class="recommandation-media">
+                    <img src="/Account/ProfilePicByUserName?userName=@Model.UserName" style="border-radius: 50%" />
+                </div>
+            </div>
+            <div class="col my-auto">
+                <p><i class="fas fa-signature"></i>   Name:  @Model.UserName</p>
+                <p><i class="fas fa-envelope-open-text"></i>   Email:  @Model.Email</p>
+                <p><i class="fas fa-user-friends"></i>   Friends:  @Model.FriendsNumber</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem">
+            <div style="width: 100%">
+                <div class="display-6">Saved items</div>
+                <hr />
+            </div>
+            <div class="workout-container" id="savedList">
+                @foreach (var elem in Model.LastSavedItems)
+                {
+                    <div class="workout-box" id="savedItem">
+                        @if (elem.IsWorkout)
+                        {
+                            <div class="workout-title"><a asp-controller="Trainer" asp-action="DetailWorkout" asp-route-workoutLink="@elem.Link">@elem.Name</a></div>
+                            <iframe id="workout-video" src="@elem.Link" title="@elem.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        }
+                        else
+                        {
+                            <div class="workout-title"><a asp-action="DetailRecipe" asp-controller="Nutritionist" asp-route-idRecipe="@elem.IdSavedItem">@elem.Name</a></div>
+                            <div class="recipe-image"><img src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = elem.IdSavedItem })" /></div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2rem">
+            <div style="width: 100%">
+                <div class="display-6">Shared items</div>
+                <hr />
+            </div>
+            
+            <div class="workout-container" id="savedList">
+                @foreach (var elem in Model.LastRecommand)
+                {
+                    <div class="workout-box" id="savedItem">
+                        @if (elem.IsWorkout)
+                        {
+                            <div class="workout-title"><a asp-controller="Trainer" asp-action="DetailWorkout" asp-route-workoutLink="@elem.Link">@elem.Name</a></div>
+                            <iframe id="workout-video" src="@elem.Link" title="@elem.Name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        }
+                        else
+                        {
+                            <div class="workout-title"><a asp-action="DetailRecipe" asp-controller="Nutritionist" asp-route-idRecipe="@elem.ItemId">@elem.Name</a></div>
+                            <div class="recipe-image"><img src="@Url.ActionLink("RecipePic", "Nutritionist", new { recipeId = elem.ItemId })" /></div>
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div> 

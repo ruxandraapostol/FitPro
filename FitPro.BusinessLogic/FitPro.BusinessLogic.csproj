@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+    <PackageReference Include="FluentValidation" Version="10.3.0" />
+    <PackageReference Include="FluentValidator" Version="2.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitPro.DataAcess\FitPro.DataAcess.csproj" />
+    <ProjectReference Include="..\FitProEntities\FitPro.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Implementation\NutritionTrack\Mapper\" />
+    <Folder Include="Implementation\NutritionTrack\Validations\" />
+    <Folder Include="Implementation\User\Validations\" />
+  </ItemGroup>
+
+</Project>
