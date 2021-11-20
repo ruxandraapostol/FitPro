@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.Linq;
 
 namespace FitPro.BusinessLogic
 {
@@ -13,17 +12,21 @@ namespace FitPro.BusinessLogic
                 .Must(service.AlimentNotAlreadyExist).WithMessage("This aliment is already in our list");
 
             RuleFor(u => u.Fat)
-                .Must(r => r >= 0 && r <= 1000).WithMessage("This aliment is already in our list");
+                .Must(r => r >= 0).WithMessage("The quantity cannot be less than 0 grams.")
+                .Must(r => r <= 10000).WithMessage("The quantity cannot be greater than 1000 per 100 grams.");
 
             RuleFor(u => u.Protein)
-                .Must(r => r >= 0 && r <= 1000).WithMessage("This aliment is already in our list");
+                .Must(r => r >= 0).WithMessage("The quantity cannot be less than 0 grams.")
+                .Must(r => r <= 10000).WithMessage("The quantity cannot be greater than 1000 per 100 grams.");
 
             RuleFor(u => u.Carbo)
-                .Must(r => r >= 0 && r <= 1000).WithMessage("This aliment is already in our list");
+                .Must(r => r >= 0).WithMessage("The carbo cannot be less than 0 per 100 grams.")
+                .Must(r => r <= 10000).WithMessage("The carbo cannot be greater than 1000 per 100 grams.");
 
             RuleFor(u => u.Calories)
                 .NotEmpty().WithMessage("The calories field is required.")
-                .Must(r => r >= 0 && r <= 10000).WithMessage("This aliment is already in our list");
+                .Must(r => r >= 0).WithMessage("The calories cannot be less than 0 per 100 grams.")
+                .Must(r => r <= 10000).WithMessage("The calories cannot be greater than 10000 per 100 grams.");
 
             RuleFor(u => u.NutritionistPassword)
                 .NotEmpty().WithMessage("The nutritionist password field is required");

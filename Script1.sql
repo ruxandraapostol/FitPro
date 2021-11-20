@@ -159,12 +159,8 @@ drop table [Aliment-RegularUser]
 create table [Aliment-RegularUser] (
 	IdAliment uniqueidentifier not null,
 	IdRegularUser uniqueidentifier not null,
-	Date date not null,
+	Date datetime not null,
 	Quantity int not null,
-	TotalCalories int not null,
-	TotalProtein int not null,
-	TotalFat int not null,
-	TotalCarbo int not null,
 	primary key (IdRegularUser, IdAliment, Date),
 	constraint FK_ARU_Program foreign key (IdAliment)
 	references [Aliment](IdAliment),

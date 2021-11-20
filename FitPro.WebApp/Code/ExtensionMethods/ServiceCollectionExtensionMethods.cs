@@ -27,6 +27,7 @@ namespace FitPro.WebApp
             services.AddScoped<UserService>();
             services.AddScoped<FitProProgramService>();
             services.AddScoped<NutritionistService>();
+            services.AddScoped<NutritionTrackService>();
 
             return services;
         }
