@@ -23,18 +23,32 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult DailyTrack(DateTime date, Guid idRegularUser)
+        public IActionResult DailyTrack(Guid idRegularUser, DateTime? date = null)
         {
-            var model = Service.GetDailyList(date, idRegularUser);
+            if(date == null)
+            {
+                date = DateTime.Now;
+            }
+            
+            var model = Service.GetDailyList(date.Value, idRegularUser);
             return View(model);
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult AddAlimentTrack()
+        public IActionResult AddAlimentTrack(DateTime? date)
         {
             var model = new SaveAlimentTrackModel();
-            model.Date = DateTime.Now;
+            if (date == null)
+            {
+                model.Date = DateTime.Now;
+            }
+            else
+            {
+                model.Date = date.Value;
+            }
+
+            model.FoodList = Service.PopulateFoodList();
 
             return View(model);
         }
@@ -44,6 +58,7 @@ namespace FitPro.WebApp.Controllers
         public IActionResult AddAlimentTrack(SaveAlimentTrackModel model, Guid idRegularUser)
         {
             model.IdRegularUser = idRegularUser;
+            model.FoodList = Service.PopulateFoodList();
             Service.AddAlimentTrack(model);
             return RedirectToAction(
                 "DailyTrack", 

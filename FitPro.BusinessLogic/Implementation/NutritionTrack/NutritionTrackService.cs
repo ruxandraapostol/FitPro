@@ -16,6 +16,17 @@ namespace FitPro.BusinessLogic
         {
             this.SaveValidator = new SaveAlimentTrackValidation();
         }
+        public List<ListItemModel<string, Guid?>>  PopulateFoodList()
+        {
+            return UnitOfWork.Aliments.Get()
+               .Select(x => new ListItemModel<string, Guid?>()
+               {
+                   Text = x.Name,
+                   Value = x.IdAliment
+               })
+               .OrderBy(x => x.Text)
+               .ToList();
+        }
 
         public DailyListModel GetDailyList(DateTime date, Guid idRegularUser)
         {
@@ -41,6 +52,29 @@ namespace FitPro.BusinessLogic
             model.TotalFats = model.AlimentTrackList.Sum(x => x.TotalFats);
             model.TotalProt = model.AlimentTrackList.Sum(x => x.TotalProt);
             model.TotalCarbs = model.AlimentTrackList.Sum(x => x.TotalCarbs);
+
+            var user = UnitOfWork.RegularUsers.Get()
+                .FirstOrDefault(r => r.IdRegularUser == idRegularUser);
+
+            if(user.BirthDate != null && user.Height != null 
+                && user.Weight != null)
+            {
+                var userAge = date.Year - user.BirthDate?.Year;
+                var bmr = 10 * user.Weight + 6.25 * user.Height - 5 * userAge;
+
+                model.RecommendedCalories = (user.Gender == (int)Gender.Woman) ? 
+                    (double)bmr - 161 : (double)bmr + 5;
+            } 
+            else
+            {
+                model.RecommendedCalories = (user.Gender == (int)Gender.Woman) ? 2000 : 2500;
+            }
+
+            model.RecommendedCalories *= model.ActiveDay ? 1.75 : 1.2;
+            model.RecommendedCalories = Math.Round(model.RecommendedCalories);
+            model.RecommendedCarbs = Math.Round(0.45 * model.RecommendedCalories / 4);
+            model.RecommendedFats = Math.Round(0.25 * model.RecommendedCalories / 9);
+            model.RecommendedProt = Math.Round(0.3 * model.RecommendedCalories / 4);
 
             return model;
         }

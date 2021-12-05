@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Implementation\NutritionTrack\Mapper\" />
     <Folder Include="Implementation\User\Validations\" />
   </ItemGroup>
 
