@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FitPro.BusinessLogic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,31 +20,22 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult DailyTrack(Guid idRegularUser, DateTime? date = null)
+        public IActionResult DailyTrack(Guid idRegularUser, string date = "")
         {
-            if(date == null)
-            {
-                date = DateTime.Now;
-            }
+            var actualDate = string.IsNullOrEmpty(date) ?
+                    DateTime.Now : DateTime.Parse(date);
             
-            var model = Service.GetDailyList(date.Value, idRegularUser);
+            var model = Service.GetDailyList(actualDate, idRegularUser);
             return View(model);
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult AddAlimentTrack(DateTime? date)
+        public IActionResult AddAlimentTrack(string date)
         {
             var model = new SaveAlimentTrackModel();
-            if (date == null)
-            {
-                model.Date = DateTime.Now;
-            }
-            else
-            {
-                model.Date = date.Value;
-            }
-
+            model.Date = string.IsNullOrEmpty(date) ? 
+                    DateTime.Now : DateTime.Parse(date);
             model.FoodList = Service.PopulateFoodList();
 
             return View(model);
@@ -63,16 +51,16 @@ namespace FitPro.WebApp.Controllers
             return RedirectToAction(
                 "DailyTrack", 
                 "NutritionTrack", 
-                new { date = model.Date, idRegularUser = idRegularUser }
+                new { date = model.Date.ToString("dd/MM/yyyy HH:mm"), idRegularUser = idRegularUser }
             );
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
         public IActionResult EditAlimentTrack(Guid idAliment,
-            Guid idRegularUser, DateTime date)
+            Guid idRegularUser, string date)
         {
-            var model = Service.GetEditAlimentTrackModel(idAliment, idRegularUser, date);
+            var model = Service.GetEditAlimentTrackModel(idAliment, idRegularUser, DateTime.Parse(date));
             return View(model);
         }
 
@@ -85,21 +73,29 @@ namespace FitPro.WebApp.Controllers
             return RedirectToAction(
                 "DailyTrack",
                 "NutritionTrack",
-                new { date = model.Date, idRegularUser = idRegularUser }
+                new { date = model.Date.ToString("dd/MM/yyyy HH:mm"), idRegularUser = idRegularUser }
             );
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize(Policy = "RegularOnly")]
         public IActionResult DeleteAlimentTrack(Guid idAliment,
-            Guid idRegularUser, DateTime date)
+            Guid idRegularUser, string date)
         {
-            Service.DeleteAlimentTrack(idAliment, idRegularUser, date);  
+            Service.DeleteAlimentTrack(idAliment, idRegularUser, DateTime.Parse(date));  
             return RedirectToAction(
                 "DailyTrack",
                 "NutritionTrack",
                 new { date = date, idRegularUser = idRegularUser }
             );
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public IActionResult ViewCalendar(Guid idRegularUser, int year, int month)
+        {
+            var model = Service.GetViewMonthCalendar(idRegularUser, year, month);
+            return View(model);
         }
 
     }

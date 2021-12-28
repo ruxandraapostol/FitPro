@@ -245,3 +245,12 @@ constraint FK_Saved_Workout foreign key (IdWorkout)
 constraint UK_Saved unique (IdRegularUser, IdWorkout, IdRecipe),
 
 );
+
+create table UserActiveDays (
+Date date not null,
+IdRegularUser uniqueidentifier not null,
+
+constraint FK_UserActiveDays_RegularUser foreign key (IdRegularUser)
+	references [RegularUser](IdRegularUser),
+primary key (IdRegularUser, Date),
+);

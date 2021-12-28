@@ -19,6 +19,7 @@ namespace FitPro.Entities
             RequestIdFromUserNavigations = new HashSet<Request>();
             RequestIdToUserNavigations = new HashSet<Request>();
             Saveds = new HashSet<Saved>();
+            UserActiveDays = new HashSet<UserActiveDays>();
         }
 
         public Guid IdRegularUser { get; set; }
@@ -30,6 +31,7 @@ namespace FitPro.Entities
 
         public virtual User IdRegularUserNavigation { get; set; }
         public virtual ICollection<Saved> Saveds { get; set; }
+        public virtual ICollection<UserActiveDays> UserActiveDays { get; set; }
         public virtual ICollection<AlimentRegularUser> AlimentRegularUsers { get; set; }
         public virtual ICollection<FriendsList> FriendsListIdUser1Navigations { get; set; }
         public virtual ICollection<FriendsList> FriendsListIdUser2Navigations { get; set; }

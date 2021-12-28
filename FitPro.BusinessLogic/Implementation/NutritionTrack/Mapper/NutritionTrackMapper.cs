@@ -13,7 +13,8 @@ namespace FitPro.BusinessLogic
         public NutritionTrackMapper()
         {
             CreateMap<SaveAlimentTrackModel, AlimentRegularUser>();
-            CreateMap<AlimentRegularUser, SaveAlimentTrackModel>();
+            CreateMap<AlimentRegularUser, SaveAlimentTrackModel>()
+                .ForMember(src => src.AlimentName, opt => opt.MapFrom(dest => dest.IdAlimentNavigation.Name));
         }
     }
 }

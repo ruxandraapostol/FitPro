@@ -22,12 +22,12 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <input type="datetime" asp-for="Date" hidden />
-
+                <input asp-for="IdAliment" hidden />
 
                 <div class="form-group">
-                    <label asp-for="IdAliment" class="control-label">Food</label>
+                    <label asp-for="AlimentName" class="control-label">Food</label>
                     <input readonly asp-for="AlimentName" class="form-control"/>
-                    <span asp-validation-for="IdAliment" class="text-danger"></span>
+                    <span asp-validation-for="AlimentName" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">

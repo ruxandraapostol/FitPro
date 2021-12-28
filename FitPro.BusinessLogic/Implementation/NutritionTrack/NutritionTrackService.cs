@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace FitPro.BusinessLogic
         {
             this.SaveValidator = new SaveAlimentTrackValidation();
         }
-        public List<ListItemModel<string, Guid?>>  PopulateFoodList()
+        public List<ListItemModel<string, Guid?>> PopulateFoodList()
         {
             return UnitOfWork.Aliments.Get()
                .Select(x => new ListItemModel<string, Guid?>()
@@ -34,7 +35,7 @@ namespace FitPro.BusinessLogic
 
             model.AlimentTrackList = UnitOfWork.AlimentRegularUsers.Get()
                 .Include(aru => aru.IdAlimentNavigation)
-                .Where(aur => aur.IdRegularUser == idRegularUser 
+                .Where(aur => aur.IdRegularUser == idRegularUser
                     && aur.Date.Date == date.Date)
                 .Select(aru => new AlimentTrackModel()
                 {
@@ -56,15 +57,15 @@ namespace FitPro.BusinessLogic
             var user = UnitOfWork.RegularUsers.Get()
                 .FirstOrDefault(r => r.IdRegularUser == idRegularUser);
 
-            if(user.BirthDate != null && user.Height != null 
+            if (user.BirthDate != null && user.Height != null
                 && user.Weight != null)
             {
                 var userAge = date.Year - user.BirthDate?.Year;
                 var bmr = 10 * user.Weight + 6.25 * user.Height - 5 * userAge;
 
-                model.RecommendedCalories = (user.Gender == (int)Gender.Woman) ? 
+                model.RecommendedCalories = (user.Gender == (int)Gender.Woman) ?
                     (double)bmr - 161 : (double)bmr + 5;
-            } 
+            }
             else
             {
                 model.RecommendedCalories = (user.Gender == (int)Gender.Woman) ? 2000 : 2500;
@@ -85,9 +86,23 @@ namespace FitPro.BusinessLogic
             {
                 SaveValidator.Validate(model).ThenThrow(model);
 
-                var newAliment = Mapper.Map<SaveAlimentTrackModel, AlimentRegularUser>(model);
+                
+                var oldAliment = uow.AlimentRegularUsers.Get()
+                    .SingleOrDefault(a => a.IdAliment == model.IdAliment
+                        && a.IdRegularUser == model.IdRegularUser
+                        && a.Date == model.Date);
 
-                uow.AlimentRegularUsers.Insert(newAliment);
+                if (oldAliment != null)
+                {
+                    oldAliment.Quantity += model.Quantity;
+                } 
+                else
+                {
+                    var newAliment = Mapper.Map<SaveAlimentTrackModel, AlimentRegularUser>(model);
+
+                    uow.AlimentRegularUsers.Insert(newAliment);
+
+                }
                 uow.SaveChanges();
             });
         }
@@ -95,12 +110,15 @@ namespace FitPro.BusinessLogic
         public SaveAlimentTrackModel GetEditAlimentTrackModel(Guid idAliment,
             Guid idRegularUser, DateTime date)
         {
-            var alimentRegularUser = UnitOfWork.AlimentRegularUsers.Get()
-                    .SingleOrDefault(a => a.IdAliment == idAliment
-                        && a.IdRegularUser == idRegularUser
-                        && a.Date == date);
+            var alimentRegularUser = UnitOfWork.AlimentRegularUsers.Get();
 
-            return Mapper.Map<AlimentRegularUser, SaveAlimentTrackModel>(alimentRegularUser);
+            var alimentRegularUser2 = alimentRegularUser
+                .Include(x => x.IdAlimentNavigation)
+                .FirstOrDefault(a => a.IdAliment == idAliment
+                    && a.IdRegularUser == idRegularUser
+                    && a.Date == date);
+
+            return Mapper.Map<AlimentRegularUser, SaveAlimentTrackModel>(alimentRegularUser2);
         }
 
         public void EditAlimentTrack(SaveAlimentTrackModel model)
@@ -117,7 +135,7 @@ namespace FitPro.BusinessLogic
                 if (oldAliment != null)
                 {
                     oldAliment.Quantity = model.Quantity;
-                    uow.AlimentRegularUsers.Insert(oldAliment);
+                    uow.AlimentRegularUsers.Update(oldAliment);
                     uow.SaveChanges();
                 }
             });
@@ -139,6 +157,52 @@ namespace FitPro.BusinessLogic
                     uow.SaveChanges();
                 }
             });
+        }
+
+        public CalendarMonthModel GetViewMonthCalendar(Guid idRegularUser, int year, int month)
+        {
+            var dateTimeInfo = new DateTimeFormatInfo();
+
+            var calendarMonth = new CalendarMonthModel()
+            {
+                Month = dateTimeInfo.GetAbbreviatedMonthName(month),
+                Year = year,
+                Days = new List<CalendarDayModel>()
+            };
+
+            var daysNumber = DateTime.DaysInMonth(year, month);
+            var firstDay = new DateTime(year, month, 1);
+
+            for(int i = 1; i < (int)firstDay.DayOfWeek; i ++)
+            {
+                calendarMonth.Days.Add(null);
+            }
+
+            for(int i = 1; i <= daysNumber; i++)
+            {
+                var currentDay = new DateTime(year, month, i);
+
+                var calendarDay = new CalendarDayModel();
+
+                calendarDay.DailyList = GetDailyList(currentDay, idRegularUser);
+
+                if(currentDay > DateTime.Now)
+                {
+                    calendarDay.ColorCode = (int)CalendarDayColors.Feature;
+                } else
+                {
+                    if(calendarDay.DailyList.RecommendedCalories < calendarDay.DailyList.TotalCalories)
+                    {
+                        calendarDay.ColorCode = (int)CalendarDayColors.OverRecommendations;
+                    } else
+                    {
+                        calendarDay.ColorCode = (int)CalendarDayColors.UnderRecommendations;
+                    }
+                }
+                calendarMonth.Days.Add(calendarDay);
+            }
+
+            return calendarMonth;
         }
     }
 
