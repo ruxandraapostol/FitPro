@@ -29,6 +29,31 @@ namespace FitPro.BusinessLogic
                .ToList();
         }
 
+        public void ChangeActiveDay(Guid idRegularUser, DateTime date)
+        {
+            ExecuteInTransaction(uow =>
+            {
+                var activeDay = uow.UserActiveDays.Get()
+                .FirstOrDefault(uad => uad.IdRegularUser == idRegularUser
+                    && uad.Date == date);
+
+                if(activeDay != null)
+                {
+                        uow.UserActiveDays.Delete(activeDay);
+                } 
+                else
+                {
+                    var newActiveDay = new UserActiveDays()
+                    {
+                        IdRegularUser = idRegularUser,
+                        Date = date
+                    };
+                        uow.UserActiveDays.Insert(newActiveDay);
+                }
+                uow.SaveChanges();
+            });
+        }
+
         public DailyListModel GetDailyList(DateTime date, Guid idRegularUser)
         {
             DailyListModel model = new DailyListModel() { Date = date };
@@ -48,6 +73,10 @@ namespace FitPro.BusinessLogic
                     TotalFats = aru.IdAlimentNavigation.Fat / 100 * aru.Quantity,
                     TotalCarbs = aru.IdAlimentNavigation.Carbo / 100 * aru.Quantity
                 }).ToList();
+
+            model.ActiveDay = UnitOfWork.UserActiveDays.Get()
+                .Any(uad => uad.IdRegularUser == idRegularUser
+                    && uad.Date == date);
 
             model.TotalCalories = model.AlimentTrackList.Sum(x => x.TotalCalories);
             model.TotalFats = model.AlimentTrackList.Sum(x => x.TotalFats);
@@ -188,15 +217,16 @@ namespace FitPro.BusinessLogic
 
                 if(currentDay > DateTime.Now)
                 {
-                    calendarDay.ColorCode = (int)CalendarDayColors.Feature;
-                } else
+                    calendarDay.ColorCode = "#dee2e6";
+                } 
+                else
                 {
                     if(calendarDay.DailyList.RecommendedCalories < calendarDay.DailyList.TotalCalories)
                     {
-                        calendarDay.ColorCode = (int)CalendarDayColors.OverRecommendations;
+                        calendarDay.ColorCode = "#a68a64";
                     } else
                     {
-                        calendarDay.ColorCode = (int)CalendarDayColors.UnderRecommendations;
+                        calendarDay.ColorCode = "#a4ac86";
                     }
                 }
                 calendarMonth.Days.Add(calendarDay);

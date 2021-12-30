@@ -98,5 +98,11 @@ namespace FitPro.WebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public void ChangeActiveDay(Guid idRegularUser, string date)
+        {
+            Service.ChangeActiveDay(idRegularUser, DateTime.Parse(date));
+        }
     }
 }

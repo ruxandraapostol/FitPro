@@ -8,7 +8,7 @@ namespace FitPro.BusinessLogic
 {
     public class CalendarDayModel
     {
-        public int ColorCode { get; set; }
+        public string ColorCode { get; set; }
         public DailyListModel DailyList { get; set; }
     }
 }

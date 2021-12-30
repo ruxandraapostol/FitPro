@@ -9,6 +9,8 @@
 <input id="totalCarbs" value="@Model.TotalCarbs" hidden />
 <input id="recommendedFats" value="@Model.RecommendedFats" hidden />
 <input id="totalFats" value="@Model.TotalFats" hidden />
+<input id="currentUserId" value="@CurrentUser.Id" hidden />
+
 
 <div class="container home-container">
 
@@ -23,10 +25,28 @@
     </div>
 
     <div class="display-6" style="margin: 3rem 0 3rem 0">
-        Consumed Food
-        <a asp-controller="NutritionTrack"
-           asp-action="AddAlimentTrack"
-           asp-route-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")"> + </a>
+        <div class="row">
+            <div class="col">
+                <a asp-controller="NutritionTrack"
+                   asp-action="AddAlimentTrack"
+                   asp-route-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")">Add Food</a>
+            </div>
+
+            <div class="col">
+                <div id="activeDayButton" data-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")" onclick="activDayChange(event)">
+                    <a>
+                        @if (Model.ActiveDay)
+                        {
+                            <span>Active Day</span>
+                        }
+                        else
+                        {
+                            <span>Normal Day</span>
+                        }
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     @if (Model.AlimentTrackList.Count() > 0)
@@ -94,5 +114,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
     <script src="@Url.Content("/js/NutritionTrack/CaloriesChartPie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/js/NutritionTrack/ActiveDay.js")" type="text/javascript"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 }
