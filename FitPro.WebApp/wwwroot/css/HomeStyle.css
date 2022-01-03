@@ -15,6 +15,7 @@ a {
 
 a:hover {
     color: #cb997e;
+    text-decoration: none;
 }
 
 .home-container {

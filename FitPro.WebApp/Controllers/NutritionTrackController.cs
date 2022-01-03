@@ -31,6 +31,22 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
+        public IActionResult NavigateDay(Guid idRegularUser, bool prev, string date = "")
+        {
+            var actualDate = string.IsNullOrEmpty(date) ?
+                    DateTime.Now : DateTime.Parse(date);
+
+            var prevDay = prev? actualDate.AddDays(-1) : actualDate.AddDays(1);
+
+            return RedirectToAction(
+                "DailyTrack",
+                "NutritionTrack",
+                new { date = prevDay.ToString("dd/MM/yyyy HH:mm"), idRegularUser = idRegularUser }
+            );
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
         public IActionResult AddAlimentTrack(string date)
         {
             var model = new SaveAlimentTrackModel();
@@ -103,6 +119,19 @@ namespace FitPro.WebApp.Controllers
         public void ChangeActiveDay(Guid idRegularUser, string date)
         {
             Service.ChangeActiveDay(idRegularUser, DateTime.Parse(date));
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public IActionResult NavigateMonth(Guid idRegularUser, bool prev, string monthName, int year)
+        {
+            var newDate = Service.NavigateMonth(prev, monthName, year);
+
+            return RedirectToAction(
+                "ViewCalendar",
+                "NutritionTrack",
+                new { idRegularUser = idRegularUser, year = newDate.Year, month = newDate.Month }
+            );
         }
     }
 }

@@ -234,6 +234,15 @@ namespace FitPro.BusinessLogic
 
             return calendarMonth;
         }
+
+        public DateTime NavigateMonth(bool prev, string monthName, int year)
+        {
+            int month = DateTime.Parse("1," + monthName + " 2022").Month;
+            var date = prev ? new DateTime(year, month, 1)
+                : new DateTime(year, month, DateTime.DaysInMonth(year, month));
+
+            return prev ? date.AddDays(-1) : date.AddDays(1);
+        }
     }
 
 }
