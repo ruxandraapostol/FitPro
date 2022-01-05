@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FitPro.BusinessLogic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,8 @@ namespace FitPro.WebApp.Controllers
     public class NutritionTrackController : BaseController
     {
         private readonly NutritionTrackService Service;
-        public NutritionTrackController(ControllerDependencies dependencies, NutritionTrackService service) : base(dependencies)
+        public NutritionTrackController(ControllerDependencies dependencies,
+            NutritionTrackService service) : base(dependencies)
         {
             this.Service = service;
         }
@@ -132,6 +134,41 @@ namespace FitPro.WebApp.Controllers
                 "NutritionTrack",
                 new { idRegularUser = idRegularUser, year = newDate.Year, month = newDate.Month }
             );
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public IActionResult NavigateMonthStatistics(bool prev, string monthName, int year)
+        {
+            var newDate = Service.NavigateMonth(prev, monthName, year);
+
+            return RedirectToAction(
+                "ViewStatistics",
+                "NutritionTrack",
+                new { year = newDate.Year, month = newDate.Month }
+            );
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public IActionResult ViewStatistics(int year, int month)
+        {
+            var model = Service.GetViewStatistics(year, month);
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public GraphModel MonthStatistic(int year, string month, int macronutrient)
+        {
+            return Service.GetMonthlyStatistic(this.CurrentUser.Id, month, year, macronutrient);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "RegularOnly")]
+        public GraphModel YearStatistic(int year, int macronutrient)
+        {
+            return Service.GetYearlyStatistic(this.CurrentUser.Id, year, macronutrient);
         }
     }
 }

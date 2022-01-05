@@ -243,6 +243,78 @@ namespace FitPro.BusinessLogic
 
             return prev ? date.AddDays(-1) : date.AddDays(1);
         }
+
+        public StatisticsModel GetViewStatistics(int year, int month)
+        {
+            var dateTimeInfo = new DateTimeFormatInfo();
+
+            return new StatisticsModel() { 
+                Month = dateTimeInfo.GetAbbreviatedMonthName(month),
+                Year = year,
+            };
+        }
+
+        public GraphModel GetMonthlyStatistic(Guid regularUserId, string monthName, int year, int macronutrient)
+        {
+            int month = DateTime.Parse("1," + monthName + " 2022").Month;
+
+            var alimentslist = UnitOfWork.AlimentRegularUsers.Get()
+                .Include(aru => aru.IdAlimentNavigation)
+                .Where(aru => aru.IdRegularUser == regularUserId
+                && aru.Date.Month == month && aru.Date.Year == year)
+                .ToList();
+
+            var graphValues = new GraphModel();
+
+            for(int i = 0; i < DateTime.DaysInMonth (year, month); i++)
+            {
+                graphValues.XValues.Add(i.ToString());
+                graphValues.YValues.Add(0);
+            }
+
+
+            foreach(var aliment in alimentslist)
+            {
+                var caloricValue = 0.00;
+
+                switch (macronutrient)
+                {
+                    case 1:
+                        caloricValue = aliment.Quantity * (aliment.IdAlimentNavigation.Calories / 100);
+                        break;
+                    case 2:
+                        caloricValue = aliment.Quantity * (aliment.IdAlimentNavigation.Protein / 100);
+                        break;
+                    case 3:
+                        caloricValue = aliment.Quantity * (aliment.IdAlimentNavigation.Carbo / 100);
+                        break;
+                    case 4:
+                        caloricValue = aliment.Quantity * (aliment.IdAlimentNavigation.Fat / 100);
+                        break;
+                }
+
+                graphValues.YValues[aliment.Date.Day] += caloricValue;
+            }
+
+            return graphValues;
+        }
+
+        public GraphModel GetYearlyStatistic(Guid regularUserId, int year, int macronutrient)
+        {
+            var dateTimeInfo = new DateTimeFormatInfo();
+            var yearGraph = new GraphModel();
+
+            for (int i = 0; i < 12; i++)
+            {
+                var month = dateTimeInfo.GetAbbreviatedMonthName(i);
+                yearGraph.XValues.Add(month);
+
+                var monthGraph = GetMonthlyStatistic(regularUserId, month, year, macronutrient);
+                yearGraph.YValues.Add(monthGraph.YValues.Sum() / monthGraph.YValues.Count());
+            }
+
+            return yearGraph;
+        }
     }
 
 }
