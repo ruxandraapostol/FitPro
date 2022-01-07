@@ -19,16 +19,16 @@
     </div>
 
     <div class="home-container">
-        <p>Month statistics</p>
-        <canvas id="monthlyChart" style="width:100%;max-width:600px"></canvas>
+        <div class="display-6">Month statistics</div>
+        <div id="monthContainer"></div>
     </div>
 
     <div class="home-container">
-        <p>Year statistics</p>
-        <canvas id="yearlyChart" style="width:100%;max-width:600px"></canvas>
+        <div class="display-6">Year statistics</div>
+        <div id="yearContainer"></div>
     </div>
 
-    <div class="text-center">
+    <div class="text-center" style="margin-top: 2rem">
 
         <a asp-controller="NutritionTrack"
            asp-action="NavigateMonthStatistics"

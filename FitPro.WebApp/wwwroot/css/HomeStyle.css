@@ -602,3 +602,9 @@ i {
     position: relative;
     margin: auto;
 }
+
+.statistic {
+    width: 100%;
+    max-width: 700px;
+    margin: auto
+}
