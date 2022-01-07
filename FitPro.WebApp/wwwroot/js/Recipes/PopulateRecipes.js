@@ -84,7 +84,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/Nutritionist/GetRecipesList',
             data: {
-                currentUserId: currentUserId,
                 currentPage: recipes.page,
                 FilterJsonString: JSON.stringify(getFilter()),
             },
@@ -108,7 +107,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/Nutritionist/GetRecipesList",
             data: {
-                currentUserId: currentUserId,
                 currentPage: recipes.page,
                 FilterJsonString: JSON.stringify(getFilter()),
             }
@@ -153,7 +151,6 @@ var editRecipe = function (event) {
 
 var deleteRecipe = function (event) {
     var idRecipe = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("id")
 
     $.ajax({
         url: '/Nutritionist/DeleteRecipe',
@@ -162,8 +159,7 @@ var deleteRecipe = function (event) {
             currentId: userId
         },
         success: function (data) {
-            window.location.href = '/Nutritionist/DeleteRecipe?idRecipe='
-                + idRecipe + '&currentId=' + userId;
+            window.location.href = '/Nutritionist/DeleteRecipe?idRecipe=' + idRecipe;
         }
     });
 }

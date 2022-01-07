@@ -68,7 +68,7 @@ var shareContent = function () {
                     window.location.href = "/Trainer/TrainerWorkoutsList?currentId=" + $("#currentUserId").val();
                     break;
                 case "recipes":
-                    window.location.href = "/Nutritionist/NutritionistRecipesList?currentId=" + $("#currentUserId").val();
+                    window.location.href = "/Nutritionist/NutritionistRecipesList";
                     break;
                 case "savedItems":
                     window.location.href = "/User/SavedItems?userId=" + $("#currentUserId").val();

@@ -42,7 +42,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="NutritionistRecipesList" asp-controller="Nutritionist" asp-route-currentId="@CurrentUser.Id">
+                            <a class="nav-link text-dark" asp-area="" asp-action="NutritionistRecipesList" asp-controller="Nutritionist">
                                 <div class="crem-text">Recipes</div>
                             </a>
                         </li>
@@ -109,7 +109,7 @@
                             <a class="dropdown-item" asp-controller="Account" asp-action="Details" asp-route-userName="@CurrentUser.UserName"><div class="crem-text">@CurrentUser.FirstName @CurrentUser.LastName</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile"><div class="crem-text">Edit Profile</div></a>
                             <a class="dropdown-item" asp-controller="Nutritionist" asp-action="AlimentsList"><div class="crem-text">Edit Aliments</div></a>
-                            <a class="dropdown-item" asp-controller="Nutritionist" asp-action="NutritionistRecipesList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Edit Recipes</div></a>
+                            <a class="dropdown-item" asp-controller="Nutritionist" asp-action="NutritionistRecipesList"><div class="crem-text">Edit Recipes</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><div class="crem-text">Log out</div></a>
                         </div>
                     </div>

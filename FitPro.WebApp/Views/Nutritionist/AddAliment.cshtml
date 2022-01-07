@@ -17,7 +17,7 @@
             </div>
 
 
-            <form asp-action="AddAliment" asp-controller="Nutritionist" asp-route-nutritionistId="@CurrentUser.Id">
+            <form asp-action="AddAliment" asp-controller="Nutritionist">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
