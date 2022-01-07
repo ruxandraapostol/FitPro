@@ -63,7 +63,7 @@
                             <a class="dropdown-item" asp-controller="User" asp-action="SavedItems" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Saved</div></a>
                             <a class="dropdown-item" asp-controller="User" asp-action="MyRecommandation" asp-route-currentUserId="@CurrentUser.Id"><div class="crem-text">Shared</div></a>
 
-                            <a class="dropdown-item" asp-controller="Account" asp-action="EditRegularProfile" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Edit</div></a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="EditRegularProfile"><div class="crem-text">Edit</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><div class="crem-text">Log out</div></a>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" asp-controller="Account" asp-action="Details" asp-route-userName="@CurrentUser.UserName"><div class="crem-text">@CurrentUser.FirstName @CurrentUser.LastName</div></a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Edit Profile</div></a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile"><div class="crem-text">Edit Profile</div></a>
                             <a class="dropdown-item" asp-controller="Admin" asp-action="AdminUsersList" asp-route-currentPage="1" asp-route-rowNumber="10"><div class="crem-text">Users</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><div class="crem-text">Log out</div></a>
                         </div>
@@ -92,7 +92,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" asp-controller="Account" asp-action="Details" asp-route-userName="@CurrentUser.UserName"><div class="crem-text">@CurrentUser.FirstName @CurrentUser.LastName</div></a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Edit Profile</div></a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile"><div class="crem-text">Edit Profile</div></a>
                             <a class="dropdown-item" asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Edit Workouts</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><div class="crem-text">Log out</div></a>
                         </div>
@@ -107,7 +107,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" asp-controller="Account" asp-action="Details" asp-route-userName="@CurrentUser.UserName"><div class="crem-text">@CurrentUser.FirstName @CurrentUser.LastName</div></a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Edit Profile</div></a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile"><div class="crem-text">Edit Profile</div></a>
                             <a class="dropdown-item" asp-controller="Nutritionist" asp-action="AlimentsList"><div class="crem-text">Edit Aliments</div></a>
                             <a class="dropdown-item" asp-controller="Nutritionist" asp-action="NutritionistRecipesList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Edit Recipes</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><div class="crem-text">Log out</div></a>
