@@ -69,6 +69,10 @@ namespace FitPro.DataAccess
         private IRepository<User> users;
         public IRepository<User> Users => users ?? (users = new BaseRepository<User>(Context));
 
+        private IRepository<UserActiveDays> userActiveDays;
+        public IRepository<UserActiveDays> UserActiveDays => userActiveDays ?? (userActiveDays = new BaseRepository<UserActiveDays>(Context));
+
+
         public void SaveChanges()
         {
             Context.SaveChanges();

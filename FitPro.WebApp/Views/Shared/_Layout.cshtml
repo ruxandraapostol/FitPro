@@ -58,6 +58,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" asp-controller="Account" asp-action="Details" asp-route-userName="@CurrentUser.UserName"><div class="crem-text">@CurrentUser.FirstName @CurrentUser.LastName</div></a>
                             <a class="dropdown-item" asp-controller="User" asp-action="FitProProgram" asp-route-userId="@CurrentUser.Id"><div class="crem-text">FitProProgram</div></a>
+                            <a class="dropdown-item" asp-controller="NutritionTrack" asp-action="DailyTrack" asp-route-idRegularUser="@CurrentUser.Id"><div class="crem-text">Track Nutrition</div></a>
                             <a class="dropdown-item" asp-controller="User" asp-action="Friends" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Friends</div></a>
                             <a class="dropdown-item" asp-controller="User" asp-action="SavedItems" asp-route-userId="@CurrentUser.Id"><div class="crem-text">Saved</div></a>
                             <a class="dropdown-item" asp-controller="User" asp-action="MyRecommandation" asp-route-currentUserId="@CurrentUser.Id"><div class="crem-text">Shared</div></a>

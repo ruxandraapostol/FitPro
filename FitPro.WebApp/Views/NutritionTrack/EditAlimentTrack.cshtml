@@ -1,0 +1,50 @@
+﻿@model FitPro.BusinessLogic.SaveAlimentTrackModel
+@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
+
+
+
+<div class="container home-container">
+    <div class="row">
+
+        <div class="col">
+            <div class="brown-container">
+                <img src="~/image/food1.jpg" id="home-image" />
+            </div>
+        </div>
+
+        <div class="col my-auto">
+            <div class="text-center">
+                <div class="display-4">Edit Food</div>
+            </div>
+
+
+            <form asp-action="EditAlimentTrack" asp-controller="NutritionTrack" asp-route-idRegularUser="@CurrentUser.Id">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="datetime" asp-for="Date" hidden />
+                <input asp-for="IdAliment" hidden />
+
+                <div class="form-group">
+                    <label asp-for="AlimentName" class="control-label">Food</label>
+                    <input readonly asp-for="AlimentName" class="form-control"/>
+                    <span asp-validation-for="AlimentName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label">Quantity</label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Edit Food" class="btn brown-btn" />
+                </div>
+            </form>
+
+            <div class="text-center">
+                <a asp-controller="NutritionTrack" asp-action="DailyTrack" asp-route-idRegularUser="@CurrentUser.Id" asp-route-date="@Model.Date">Back to nutrition track</a>
+                <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
+            </div>
+        </div>
+    </div>
+</div>

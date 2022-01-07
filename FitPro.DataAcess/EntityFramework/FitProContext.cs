@@ -32,6 +32,7 @@ namespace FitPro.DataAccess
         public virtual DbSet<Saved> Saveds { get; set; }
         public virtual DbSet<SpecialUser> SpecialUsers { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserActiveDays> UserActiveDays { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
         public virtual DbSet<WorkoutCategory> WorkoutCategories { get; set; }
 
@@ -62,6 +63,7 @@ namespace FitPro.DataAccess
             modelBuilder.ApplyConfiguration(new SavedConfiguration());
             modelBuilder.ApplyConfiguration(new SpecialUserConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserActiveDaysConfiguration());
             modelBuilder.ApplyConfiguration(new WorkoutConfiguration());
             modelBuilder.ApplyConfiguration(new WorkoutCategoryConfiguration());
         }
