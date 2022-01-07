@@ -84,7 +84,7 @@ $(document).scroll(function () {
 var detailWorkout = function (event) {
     var linkUrl = $(event.currentTarget).data("link");
 
-    window.location.href = '/Trainer/DetailWorkout?workoutLink=' + linkUrl + '&programId='
-                + $("#programId").val() + '&userId=' + $("#currentUserId").val();
+    window.location.href = '/Trainer/DetailWorkout?workoutLink=' + linkUrl
+        + '&programId=' + $("#programId").val();
 }
 

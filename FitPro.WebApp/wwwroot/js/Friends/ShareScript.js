@@ -65,7 +65,7 @@ var shareContent = function () {
 
             switch (prevPage) {
                 case "workouts":
-                    window.location.href = "/Trainer/TrainerWorkoutsList?currentId=" + $("#currentUserId").val();
+                    window.location.href = "/Trainer/TrainerWorkoutsList";
                     break;
                 case "recipes":
                     window.location.href = "/Nutritionist/NutritionistRecipesList";

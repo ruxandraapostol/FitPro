@@ -6,7 +6,7 @@
 </div>
 
 <div class="home-container">
-    <form asp-action="AddWorkout" asp-controller="Trainer" asp-route-idTrainer="@CurrentUser.Id">
+    <form asp-action="AddWorkout" asp-controller="Trainer">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="control-label"></label>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="text-center">
-            <a asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Back to edit workouts list.</div></a>
+            <a asp-controller="Trainer" asp-action="TrainerWorkoutsList"><div class="crem-text">Back to edit workouts list.</div></a>
             <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
         </div>
 

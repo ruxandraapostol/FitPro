@@ -110,7 +110,7 @@
                         <a asp-controller="Trainer" asp-action="EditWorkout" asp-route-workoutLink="@elem.LinkUrl">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a asp-controller="Trainer" asp-action="DeleteWorkout" asp-route-workoutLink="@elem.LinkUrl" asp-route-currentId="@CurrentUser.Id">
+                        <a asp-controller="Trainer" asp-action="DeleteWorkout" asp-route-workoutLink="@elem.LinkUrl">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     }
@@ -182,7 +182,7 @@
                 <div class="editWorkout" data-link="{{linkUrl}}" onclick="editWorkout(event)">
                     <i class="fas fa-edit"></i>
                 </div>
-                <div class="deleteWorkout" data-link="{{linkUrl}}" data-id="{{idUser}}" onclick="deleteWorkout(event)" asp-route-currentId="@CurrentUser.Id">
+                <div class="deleteWorkout" data-link="{{linkUrl}}" data-id="{{idUser}}" onclick="deleteWorkout(event)">
                     <i class="fas fa-trash-alt"></i>
                 </div>
                 {{/ifEquals}}

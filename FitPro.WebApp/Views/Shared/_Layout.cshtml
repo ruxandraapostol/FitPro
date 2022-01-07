@@ -32,7 +32,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Trainer" asp-action="TrainerWorkoutsList">
                                 <div class="crem-text">Workouts</div>
                             </a>
                         </li>
@@ -93,7 +93,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" asp-controller="Account" asp-action="Details" asp-route-userName="@CurrentUser.UserName"><div class="crem-text">@CurrentUser.FirstName @CurrentUser.LastName</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="EditSpecialProfile"><div class="crem-text">Edit Profile</div></a>
-                            <a class="dropdown-item" asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Edit Workouts</div></a>
+                            <a class="dropdown-item" asp-controller="Trainer" asp-action="TrainerWorkoutsList"><div class="crem-text">Edit Workouts</div></a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><div class="crem-text">Log out</div></a>
                         </div>
                     </div>

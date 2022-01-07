@@ -86,7 +86,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/Trainer/GetWorkoutsList',
             data: {
-                currentUserId: currentUserId,
                 currentPage: workouts.page,
                 FilterJsonString: JSON.stringify(getFilters()),
             },
@@ -110,7 +109,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/Trainer/GetWorkoutsList",
             data: {
-                currentUserId: currentUserId,
                 currentPage: workouts.page,
                 FilterJsonString: JSON.stringify(getFilters()),
             }
@@ -155,17 +153,14 @@ var editWorkout = function (event) {
 
 var deleteWorkout = function (event) {
     var linkUrl = $(event.currentTarget).data("link");
-    var userId = $(event.currentTarget).data("id")
 
     $.ajax({
         url: '/Trainer/DeleteWorkout',
         data: {
-            workoutLink: linkUrl,
-            currentId: userId
+            workoutLink: linkUrl
         },
         success: function (data) {
-            window.location.href = '/Trainer/DeleteWorkout?workoutLink='
-                + linkUrl + '&currentId=' + userId;
+            window.location.href = '/Trainer/DeleteWorkout?workoutLink=' + linkUrl;
         }
     });
 }
