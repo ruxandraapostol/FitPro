@@ -18,7 +18,7 @@
             </div>
 
 
-            <form asp-action="AddAlimentTrack" asp-controller="NutritionTrack" asp-route-idRegularUser="@CurrentUser.Id">
+            <form asp-action="AddAlimentTrack" asp-controller="NutritionTrack">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 
                 <input type="datetime" asp-for="Date" hidden/>
@@ -42,7 +42,7 @@
             </form>
 
             <div class="text-center">
-                <a asp-controller="NutritionTrack" asp-action="DailyTrack" asp-route-idRegularUser="@CurrentUser.Id" asp-route-date="@Model.Date">Back to nutrition track</a>
+                <a asp-controller="NutritionTrack" asp-action="DailyTrack" asp-route-date="@Model.Date">Back to nutrition track</a>
                 <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
             </div>
         </div>

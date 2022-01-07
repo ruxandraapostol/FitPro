@@ -50,7 +50,6 @@
 
         <a asp-controller="NutritionTrack"
            asp-action="NavigateMonth"
-           asp-route-idRegularUser="@CurrentUser.Id"
            asp-route-year="@Model.Year"
            asp-route-monthName="@Model.Month"
            style="max-height: 38px"><div>Next Month</div></a>
@@ -58,7 +57,6 @@
         <a asp-controller="NutritionTrack"
            asp-action="NavigateMonth"
            asp-route-prev="@true"
-           asp-route-idRegularUser="@CurrentUser.Id"
            asp-route-year="@Model.Year"
            asp-route-monthName="@Model.Month"
            style="max-height: 38px"><div>Previous Month</div></a>
