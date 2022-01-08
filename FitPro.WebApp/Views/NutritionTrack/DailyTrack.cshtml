@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.DailyListModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <input id="recommendedCalories" value="@Model.RecommendedCalories" hidden />
 <input id="totalCalories" value="@Model.TotalCalories" hidden />
@@ -9,7 +8,6 @@
 <input id="totalCarbs" value="@Model.TotalCarbs" hidden />
 <input id="recommendedFats" value="@Model.RecommendedFats" hidden />
 <input id="totalFats" value="@Model.TotalFats" hidden />
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 
 
 <div class="container home-container">
@@ -91,14 +89,12 @@
 
     <a asp-controller="NutritionTrack"
        asp-action="NavigateDay"
-       asp-route-idRegularUser="@CurrentUser.Id"
        asp-route-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")"
        style="max-height: 38px"><div>Next Day</div></a>
 
     <a asp-controller="NutritionTrack"
        asp-action="NavigateDay"
        asp-route-prev="@true"
-       asp-route-idRegularUser="@CurrentUser.Id"
        asp-route-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")"
        style="max-height: 38px"><div>Previous Day</div></a>
 

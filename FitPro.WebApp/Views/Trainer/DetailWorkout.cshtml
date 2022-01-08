@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.DetailWorkoutModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <div class="text-center display-4">
     @Model.Name
@@ -37,7 +36,7 @@
     <div class="text-center">
         @if (Model.ProgramId != Guid.Empty && Model.UserId != Guid.Empty)
         {
-            <a asp-controller="User" asp-action="CurrentFitProProgram" asp-route-currentUserId="@Model.UserId" asp-route-programId="@Model.ProgramId">
+            <a asp-controller="User" asp-action="CurrentFitProProgram" asp-route-programId="@Model.ProgramId">
                 <div class="brown-text">Back to Your FitProProgram.</div>
             </a>
         }

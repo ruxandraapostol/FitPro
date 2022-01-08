@@ -10,7 +10,6 @@
             "isWorkout": item.isWorkout,
             "link": item.link,
             "name": item.name,
-            "idCurrentUser": $("#currentUserId").val()
         };
 
         var html = templateScript(context);
@@ -77,7 +76,6 @@ var unsave = function (event) {
 
 var shareItem = function (event) {
     var itemId = $(event.currentTarget).data("iditem");
-    var userId = $(event.currentTarget).data("iduser");
 
     window.location.href = '/User/RecommandItem?itemId=' + itemId + '&fromPage=savedItems';
 }

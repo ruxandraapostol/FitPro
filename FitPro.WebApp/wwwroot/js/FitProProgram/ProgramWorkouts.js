@@ -11,8 +11,7 @@ var workouts = {
         var context = {
             "linkUrl": item.linkUrl,
             "name": item.name,
-            "programId": $("#programId").val(),
-            "userId": $("#currentUserId").val()
+            "programId": $("#programId").val()
         };
 
         var html = templateScript(context);

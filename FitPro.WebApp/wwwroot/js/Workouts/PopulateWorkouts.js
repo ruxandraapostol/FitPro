@@ -1,5 +1,4 @@
-﻿var currentUserId = $('#CurrentUserId').val();
-var currentUserRole = $('#CurrentUserRole').val();
+﻿var currentUserRole = $('#CurrentUserRole').val();
 
 
 
@@ -13,7 +12,6 @@ var workouts = {
 
 
         var context = {
-            "idUser": currentUserId,
             "role": currentUserRole,
             "name": item.name,
             "linkUrl": item.linkUrl,

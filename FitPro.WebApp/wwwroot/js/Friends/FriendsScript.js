@@ -45,8 +45,6 @@ var friends = {
     }
 }
 
-var idCurrentUser = $('#currentUserId').val();
-
 $(document).ready(function () {
 
     $('#search-button-PossibleFriends').click(function () {
@@ -55,7 +53,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/User/GetPossibleFriends',
             data: {
-                currentUserId: idCurrentUser,
                 currentPage: possibleFriends.page,
                 searchStringPossibleFriends: searchString
             }
@@ -110,7 +107,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/User/GetFriends',
             data: {
-                currentUserId: idCurrentUser,
                 currentPage: friends.page,
                 searchStringFriends: searchString
             }
@@ -164,7 +160,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/User/GetFriendRequestsList',
             data: {
-                currentUserId: idCurrentUser,
                 currentPage: requestedFriends.page
             }
         }).done(function (data) {
@@ -233,7 +228,6 @@ var friendsAction = function (event) {
     $.ajax({
         url: url,
         data: {
-            currentUserId: idCurrentUser,
             idUser: idUser
         }
     }).done(function () {

@@ -28,7 +28,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/User/GetFriends",
             data: {
-                currentUserId: $("#currentUserId").val(),
                 currentPage: shareItem.page,
                 searchStringFriends: $("#search-input-Friends")
             }
@@ -49,8 +48,7 @@ var shareContent = function () {
 
     var model = {
         Comment: $("#commentId").val(),
-        IdItem: $("#itemId").val(),
-        CurrentUserId: $("#currentUserId").val()
+        IdItem: $("#itemId").val()
     };
 
 

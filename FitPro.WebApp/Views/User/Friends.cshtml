@@ -1,11 +1,9 @@
 ﻿@model FitPro.BusinessLogic.FriendsListModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <div class="text-center">
     <div class="display-4">Everything is better with friends</div>
 </div>
 
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 <input asp-for="SearchStringPossibleFriends" id="searchStringPossibleFriends" hidden />
 <input asp-for="SearchStringFriends" id="searchStringFriends" hidden />
 

@@ -4,7 +4,6 @@
 <div class="display-4 text-center">Workouts List</div>
 
 <input id="CurrentUserRole" value="@CurrentUser.Role" hidden />
-<input id="CurrentUserId" value="@CurrentUser.Id" hidden />
 
 <div class="home-container">
     <div class="my-table-header">
@@ -136,7 +135,7 @@
                             </div>
                         }
 
-                        <div class="ShareItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="shareWorkout(event)">
+                        <div class="ShareItem" data-idworkout="@elem.IdWorkout" onclick="shareWorkout(event)">
                             <i class="fas fa-share"></i>
                         </div>
                     }
@@ -173,7 +172,7 @@
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{/if}}
-                <div class="ShareItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="shareWorkout(event)">
+                <div class="ShareItem" data-idworkout="{{idWorkout}}" onclick="shareWorkout(event)">
                     <i class="fas fa-share"></i>
                 </div>
                 {{/ifEquals}}
@@ -182,7 +181,7 @@
                 <div class="editWorkout" data-link="{{linkUrl}}" onclick="editWorkout(event)">
                     <i class="fas fa-edit"></i>
                 </div>
-                <div class="deleteWorkout" data-link="{{linkUrl}}" data-id="{{idUser}}" onclick="deleteWorkout(event)">
+                <div class="deleteWorkout" data-link="{{linkUrl}}" onclick="deleteWorkout(event)">
                     <i class="fas fa-trash-alt"></i>
                 </div>
                 {{/ifEquals}}

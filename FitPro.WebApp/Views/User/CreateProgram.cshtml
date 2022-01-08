@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.CreateProgramModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <div class="container home-container">
     <div class="row">
@@ -14,7 +13,7 @@
                 to train and the period of time you want to allocate.
                 </p>
 
-            <form asp-action="CreateProgram" asp-controller="User" asp-route-userId="@CurrentUser.Id">
+            <form asp-action="CreateProgram" asp-controller="User">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="TimePeriod" class="control-label">Time period (weeks)</label>

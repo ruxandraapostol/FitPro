@@ -1,7 +1,4 @@
-﻿var currentUserId = $('#CurrentUserId').val();
-var currentUserRole = $('#CurrentUserRole').val();
-
-
+﻿var currentUserRole = $('#CurrentUserRole').val();
 
 var recipes = {
     page: 1,
@@ -13,7 +10,6 @@ var recipes = {
 
 
         var context = {
-            "idUser": currentUserId,
             "role": currentUserRole,
             "name": item.name,
             "idRecipe": item.idRecipe,
@@ -155,8 +151,7 @@ var deleteRecipe = function (event) {
     $.ajax({
         url: '/Nutritionist/DeleteRecipe',
         data: {
-            idRecipe: idRecipe,
-            currentId: userId
+            idRecipe: idRecipe
         },
         success: function (data) {
             window.location.href = '/Nutritionist/DeleteRecipe?idRecipe=' + idRecipe;
@@ -166,7 +161,6 @@ var deleteRecipe = function (event) {
 
 var saveRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("iduser")
 
     var savediv = '#save_' + recipeId;
     var unsavediv = '#unsave_' + recipeId;
@@ -184,7 +178,6 @@ var saveRecipe = function (event) {
 
 var unsaveRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("iduser");
 
     var savediv = '#save_' + recipeId;
     var unsavediv = '#unsave_' + recipeId;
@@ -202,7 +195,6 @@ var unsaveRecipe = function (event) {
 
 var shareRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("iduser");
 
     window.location.href = '/User/RecommandItem?itemId=' + recipeId + '&fromPage=recipes';
 }
