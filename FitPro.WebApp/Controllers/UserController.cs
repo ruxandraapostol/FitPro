@@ -23,43 +23,43 @@ namespace FitPro.WebApp.Controllers
         //--------------------------------------------Save-----------------------------------------------
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult SavedItems(Guid userId)
+        public IActionResult SavedItems()
         {
-            var model = Service.GetSavedItems(userId, 1);
+            var model = Service.GetSavedItems(CurrentUser.Id, 1);
             return View(model);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<SavedItemModel> GetSavedItemsList (Guid userId, int currentPage)
+        public List<SavedItemModel> GetSavedItemsList (int currentPage)
         {
-            return Service.GetSavedItems(userId, currentPage);
+            return Service.GetSavedItems(CurrentUser.Id, currentPage);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public SavedItemModel GetOneSavedItemItem(Guid userId, int currentPage)
+        public SavedItemModel GetOneSavedItemItem(int currentPage)
         {
-            return Service.GetOneSavedItem(userId, currentPage);
+            return Service.GetOneSavedItem(CurrentUser.Id, currentPage);
         }
 
 
         [Authorize(Policy = "RegularOnly")]
-        public void SaveItem(Guid currentUserId, Guid itemId)
+        public void SaveItem(Guid itemId)
         {
-            Service.SaveItem(currentUserId, itemId);
+            Service.SaveItem(CurrentUser.Id, itemId);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void UnsaveItem(Guid currentUserId, Guid itemId)
+        public void UnsaveItem(Guid itemId)
         {
-            Service.UnsaveItem(currentUserId, itemId);
+            Service.UnsaveItem(CurrentUser.Id, itemId);
         }
 
         //--------------------------------------------Share-----------------------------------------------
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult RecommandItem(Guid currentUserId, Guid itemId, string fromPage)
+        public IActionResult RecommandItem(Guid itemId, string fromPage)
         {
-            var model = Service.GetRecommandItemModel(currentUserId, itemId, fromPage);
+            var model = Service.GetRecommandItemModel(CurrentUser.Id, itemId, fromPage);
             return View(model);
         }
 
@@ -73,23 +73,23 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult MyRecommandation(Guid currentUserId)
+        public IActionResult MyRecommandation()
         {
-            var model = Service.GetFiendRecommands(currentUserId, 1);
+            var model = Service.GetFiendRecommands(CurrentUser.Id, 1);
             return View(model);
         }
 
 
         [Authorize(Policy = "RegularOnly")]
-        public List<FriendRecommand> GetFriendsRecommandations(Guid currentUserId, int currentPage)
+        public List<FriendRecommand> GetFriendsRecommandations(int currentPage)
         {
-            return Service.GetFiendRecommands(currentUserId, currentPage);
+            return Service.GetFiendRecommands(CurrentUser.Id, currentPage);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<FriendRecommand> GetMyRecommandations(Guid currentUserId, int currentPage)
+        public List<FriendRecommand> GetMyRecommandations(int currentPage)
         {
-            return Service.GetMyRecommands(currentUserId, currentPage);
+            return Service.GetMyRecommands(CurrentUser.Id, currentPage);
         }
 
 

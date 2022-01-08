@@ -71,7 +71,7 @@ var shareContent = function () {
                     window.location.href = "/Nutritionist/NutritionistRecipesList";
                     break;
                 case "savedItems":
-                    window.location.href = "/User/SavedItems?userId=" + $("#currentUserId").val();
+                    window.location.href = "/User/SavedItems";
                     break;
                 default:
                     window.location.href = "/Home/Index";

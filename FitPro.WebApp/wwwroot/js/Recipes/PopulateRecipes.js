@@ -177,7 +177,6 @@ var saveRecipe = function (event) {
     $.ajax({
         url: '/User/SaveItem',
         data: {
-            currentUserId: userId,
             itemId: recipeId,
         },
     });
@@ -196,7 +195,6 @@ var unsaveRecipe = function (event) {
     $.ajax({
         url: '/User/UnsaveItem',
         data: {
-            currentUserId: userId,
             itemId: recipeId,
         },
     });
@@ -206,6 +204,5 @@ var shareRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
     var userId = $(event.currentTarget).data("iduser");
 
-    window.location.href = '/User/RecommandItem?currentUserId=' + userId
-        + '&itemId=' + recipeId + '&fromPage=recipes';
+    window.location.href = '/User/RecommandItem?itemId=' + recipeId + '&fromPage=recipes';
 }

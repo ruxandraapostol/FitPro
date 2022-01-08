@@ -66,7 +66,6 @@ var showMyRecommandation = function () {
     $.ajax({
         url: '/User/GetMyRecommandations',
         data: {
-            currentUserId: $('#currentUserId').val(),
             currentPage: myUtils.currentPage
         }
     }).done(function (data) {
@@ -86,7 +85,6 @@ var showFriendsRecommandation = function () {
     $.ajax({
         url: '/User/GetFriendsRecommandations',
         data: {
-            currentUserId: $('#currentUserId').val(),
             currentPage: myUtils.currentPage
         }
     }).done(function (data) {
@@ -123,7 +121,6 @@ $(document).scroll(function () {
             $.ajax({
                 url: '/User/GetMyRecommandations',
                 data: {
-                    currentUserId: $('#currentUserId').val(),
                     currentPage: myUtils.currentPage
                 }
             }).done(function (data) {
@@ -136,7 +133,6 @@ $(document).scroll(function () {
             $.ajax({
                 url: '/User/GetFriendsRecommandations',
                 data: {
-                    currentUserId: $('#currentUserId').val(),
                     currentPage: myUtils.currentPage
                 }
             }).done(function (data) {

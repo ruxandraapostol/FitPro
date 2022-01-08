@@ -167,7 +167,6 @@ var deleteWorkout = function (event) {
 
 var saveWorkout = function (event) {
     var workoutId = $(event.currentTarget).data("idworkout");
-    var userId = $(event.currentTarget).data("iduser")
 
     var savediv = '#save_' + workoutId;
     var unsavediv = '#unsave_' + workoutId;
@@ -178,7 +177,6 @@ var saveWorkout = function (event) {
     $.ajax({
         url: '/User/SaveItem',
         data: {
-            currentUserId: userId,
             itemId: workoutId,
         },
     });
@@ -186,7 +184,6 @@ var saveWorkout = function (event) {
 
 var unsaveWorkout = function (event) {
     var workoutId = $(event.currentTarget).data("idworkout");
-    var userId = $(event.currentTarget).data("iduser")
 
     var savediv = '#save_' + workoutId;
     var unsavediv = '#unsave_' + workoutId;
@@ -197,7 +194,6 @@ var unsaveWorkout = function (event) {
     $.ajax({
         url: '/User/UnsaveItem',
         data: {
-            currentUserId: userId,
             itemId: workoutId,
         },
     });
@@ -205,8 +201,6 @@ var unsaveWorkout = function (event) {
 
 var shareWorkout = function (event) {
     var workoutId = $(event.currentTarget).data("idworkout");
-    var userId = $(event.currentTarget).data("iduser");
 
-    window.location.href = '/User/RecommandItem?currentUserId=' + userId
-        + '&itemId=' + workoutId + '&fromPage=workouts';
+    window.location.href = '/User/RecommandItem?itemId=' + workoutId + '&fromPage=workouts';
 }

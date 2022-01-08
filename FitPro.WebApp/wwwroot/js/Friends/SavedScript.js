@@ -31,7 +31,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/User/GetSavedItemsList",
             data: {
-                userId: $("#currentUserId").val(),
                 currentPage: savedItems.page
             }
         }).done(function (data) {
@@ -56,7 +55,6 @@ var unsave = function (event) {
     $.ajax({
         url: '/User/UnsaveItem',
         data: {
-            currentUserId: $("#currentUserId").val(),
             itemId: idItem,
         },
     });
@@ -64,7 +62,6 @@ var unsave = function (event) {
     $.ajax({
         url: '/User/GetOneSavedItemItem',
         data: {
-            currentUserId: $("#currentUserId").val(),
             itemId: idItem,
         },
     }).done(function (data) {
@@ -82,8 +79,7 @@ var shareItem = function (event) {
     var itemId = $(event.currentTarget).data("iditem");
     var userId = $(event.currentTarget).data("iduser");
 
-    window.location.href = '/User/RecommandItem?currentUserId=' + userId
-        + '&itemId=' + itemId + '&fromPage=savedItems';
+    window.location.href = '/User/RecommandItem?itemId=' + itemId + '&fromPage=savedItems';
 }
 
 var detailWorkout = function (event) {

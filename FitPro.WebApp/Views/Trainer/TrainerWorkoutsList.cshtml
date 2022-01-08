@@ -119,19 +119,19 @@
 
                         @if (elem.IsSaved)
                         {
-                            <div id="unsave_@elem.IdWorkout" class="UnsaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="unsaveWorkout(event)">
+                            <div id="unsave_@elem.IdWorkout" class="UnsaveItem" data-idworkout="@elem.IdWorkout" onclick="unsaveWorkout(event)">
                                 <i class="fas fa-bookmark"></i>
                             </div>
-                            <div id="save_@elem.IdWorkout" style="display:none" class="SaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="saveWorkout(event)">
+                            <div id="save_@elem.IdWorkout" style="display:none" class="SaveItem" data-idworkout="@elem.IdWorkout" onclick="saveWorkout(event)">
                                 <i class="far fa-bookmark"></i>
                             </div>
                         }
                         else
                         {
-                            <div id="unsave_@elem.IdWorkout" style="display:none"  class="UnsaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="unsaveWorkout(event)">
+                            <div id="unsave_@elem.IdWorkout" style="display:none"  class="UnsaveItem" data-idworkout="@elem.IdWorkout" onclick="unsaveWorkout(event)">
                                 <i class="fas fa-bookmark"></i>
                             </div>
-                            <div id="save_@elem.IdWorkout" class="SaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="saveWorkout(event)">
+                            <div id="save_@elem.IdWorkout" class="SaveItem" data-idworkout="@elem.IdWorkout" onclick="saveWorkout(event)">
                                 <i class="far fa-bookmark"></i>
                             </div>
                         }
@@ -159,17 +159,17 @@
                 </div>
                 {{#ifEquals role "Regular"}}
                 {{#if isSaved}}
-                <div id="unsave_{{idWorkout}}" class="UnsaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="unsaveWorkout(event)">
+                <div id="unsave_{{idWorkout}}" class="UnsaveItem" data-idworkout="{{idWorkout}}" onclick="unsaveWorkout(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div id="save_{{idWorkout}}" style="display:none" class="SaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="saveWorkout(event)">
+                <div id="save_{{idWorkout}}" style="display:none" class="SaveItem" data-idworkout="{{idWorkout}}" onclick="saveWorkout(event)">
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{else}}
-                <div id="unsave_{{idWorkout}}" style="display:none"  class="UnsaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="unsaveWorkout(event)">
+                <div id="unsave_{{idWorkout}}" style="display:none"  class="UnsaveItem" data-idworkout="{{idWorkout}}" onclick="unsaveWorkout(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div id="save_{{idWorkout}}" class="SaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="saveWorkout(event)">
+                <div id="save_{{idWorkout}}" class="SaveItem" data-idworkout="{{idWorkout}}" onclick="saveWorkout(event)">
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{/if}}
