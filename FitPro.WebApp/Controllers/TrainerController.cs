@@ -16,16 +16,16 @@ namespace FitPro.WebApp.Controllers
             Service = service;
         }
 
-        public List<WorkoutModel> GetWorkoutsList(Guid currentUserId, int currentPage, string FilterJsonString)
+        public List<WorkoutModel> GetWorkoutsList(int currentPage, string FilterJsonString)
         {
             var filter = JsonConvert.DeserializeObject<FiltersModel>(FilterJsonString);
-            var list = Service.GetWorkoutsList(currentUserId, currentPage, filter);
+            var list = Service.GetWorkoutsList(CurrentUser.Id, currentPage, filter);
             return list;
         }
 
-        public IActionResult TrainerWorkoutsList(Guid currentId)
+        public IActionResult TrainerWorkoutsList()
         {
-            var model = Service.GetWorkoutsListModel(currentId);
+            var model = Service.GetWorkoutsListModel(CurrentUser.Id);
             return View(model);
         }
 
@@ -46,18 +46,18 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "TrainerOnly")]
-        public IActionResult AddWorkout(AddWorkoutModel model, Guid idTrainer)
+        public IActionResult AddWorkout(AddWorkoutModel model)
         {
             model.Categories = Service.PopulateWorkoutCategoryDropDown();
-            model.IdTrainer = idTrainer;
+            model.IdTrainer = CurrentUser.Id;
             Service.AddWorkout(model);
             return RedirectToAction("TrainerWorkoutsList", "Trainer");
         }
 
         [HttpGet]
-        public IActionResult DetailWorkout(string workoutLink, Guid programId, Guid userId, bool fromSaved, bool fromShare)
+        public IActionResult DetailWorkout(string workoutLink, Guid programId, bool fromSaved, bool fromShare)
         {
-            var model = Service.GetDetailWorkoutModel(workoutLink, programId, userId, fromSaved, fromShare);
+            var model = Service.GetDetailWorkoutModel(workoutLink, programId, CurrentUser.Id, fromSaved, fromShare);
             return View(model);
         }
 
@@ -71,9 +71,9 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "TrainerOnly")]
-        public IActionResult EditWorkout(EditWorkoutModel model, Guid idCurrentTrainer)
+        public IActionResult EditWorkout(EditWorkoutModel model)
         {
-            model.LastModifiedBy = idCurrentTrainer;
+            model.LastModifiedBy = CurrentUser.Id;
             Service.PopulateWorkoutCategoryDropDown(model);
             Service.EditWorkout(model);
             return View(model);
@@ -81,10 +81,10 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "TrainerOnly")]
-        public IActionResult DeleteWorkout(string workoutLink, Guid currentId)
+        public IActionResult DeleteWorkout(string workoutLink)
         {
-            var model = Service.GetDeleteWorkoutModel(workoutLink, currentId);
-            if (model.IdTrainer == currentId)
+            var model = Service.GetDeleteWorkoutModel(workoutLink, CurrentUser.Id);
+            if (model.IdTrainer == CurrentUser.Id)
             {
                 return View(model);
             }

@@ -23,43 +23,43 @@ namespace FitPro.WebApp.Controllers
         //--------------------------------------------Save-----------------------------------------------
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult SavedItems(Guid userId)
+        public IActionResult SavedItems()
         {
-            var model = Service.GetSavedItems(userId, 1);
+            var model = Service.GetSavedItems(CurrentUser.Id, 1);
             return View(model);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<SavedItemModel> GetSavedItemsList (Guid userId, int currentPage)
+        public List<SavedItemModel> GetSavedItemsList (int currentPage)
         {
-            return Service.GetSavedItems(userId, currentPage);
+            return Service.GetSavedItems(CurrentUser.Id, currentPage);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public SavedItemModel GetOneSavedItemItem(Guid userId, int currentPage)
+        public SavedItemModel GetOneSavedItemItem(int currentPage)
         {
-            return Service.GetOneSavedItem(userId, currentPage);
+            return Service.GetOneSavedItem(CurrentUser.Id, currentPage);
         }
 
 
         [Authorize(Policy = "RegularOnly")]
-        public void SaveItem(Guid currentUserId, Guid itemId)
+        public void SaveItem(Guid itemId)
         {
-            Service.SaveItem(currentUserId, itemId);
+            Service.SaveItem(CurrentUser.Id, itemId);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void UnsaveItem(Guid currentUserId, Guid itemId)
+        public void UnsaveItem(Guid itemId)
         {
-            Service.UnsaveItem(currentUserId, itemId);
+            Service.UnsaveItem(CurrentUser.Id, itemId);
         }
 
         //--------------------------------------------Share-----------------------------------------------
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult RecommandItem(Guid currentUserId, Guid itemId, string fromPage)
+        public IActionResult RecommandItem(Guid itemId, string fromPage)
         {
-            var model = Service.GetRecommandItemModel(currentUserId, itemId, fromPage);
+            var model = Service.GetRecommandItemModel(CurrentUser.Id, itemId, fromPage);
             return View(model);
         }
 
@@ -68,28 +68,29 @@ namespace FitPro.WebApp.Controllers
         {
             var list = JsonConvert.DeserializeObject<List<string>>(jsonFriendsUserNames);
             var model = JsonConvert.DeserializeObject<RecommandItemModel>(jsonModel);
+            model.CurrentUserId = CurrentUser.Id;
             Service.RecommandSomething(model, list);
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult MyRecommandation(Guid currentUserId)
+        public IActionResult MyRecommandation()
         {
-            var model = Service.GetFiendRecommands(currentUserId, 1);
+            var model = Service.GetFiendRecommands(CurrentUser.Id, 1);
             return View(model);
         }
 
 
         [Authorize(Policy = "RegularOnly")]
-        public List<FriendRecommand> GetFriendsRecommandations(Guid currentUserId, int currentPage)
+        public List<FriendRecommand> GetFriendsRecommandations(int currentPage)
         {
-            return Service.GetFiendRecommands(currentUserId, currentPage);
+            return Service.GetFiendRecommands(CurrentUser.Id, currentPage);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<FriendRecommand> GetMyRecommandations(Guid currentUserId, int currentPage)
+        public List<FriendRecommand> GetMyRecommandations(int currentPage)
         {
-            return Service.GetMyRecommands(currentUserId, currentPage);
+            return Service.GetMyRecommands(CurrentUser.Id, currentPage);
         }
 
 
@@ -97,85 +98,84 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult Friends(Guid userId)
+        public IActionResult Friends()
         {
-            var model = Service.GetFriendsListModel(userId);
+            var model = Service.GetFriendsListModel(CurrentUser.Id);
             return View(model);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<FriendModel> GetFriends(Guid currentUserId,
-            int currentPage, string searchStringFriends)
+        public List<FriendModel> GetFriends(int currentPage, string searchStringFriends)
         {
-            return Service.GetFriendsList(currentUserId, currentPage, searchStringFriends);
+            return Service.GetFriendsList(CurrentUser.Id, currentPage, searchStringFriends);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<PossibleFriendModel> GetPossibleFriends(Guid currentUserId,
+        public List<PossibleFriendModel> GetPossibleFriends(
             int currentPage, string searchStringPossibleFriends)
         {
-            return Service.GetPossibleFriendsList(currentUserId, currentPage, searchStringPossibleFriends);
+            return Service.GetPossibleFriendsList(CurrentUser.Id, currentPage, searchStringPossibleFriends);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public List<FriendRequestModel> GetFriendRequestsList(Guid currentUserId, int currentPage)
+        public List<FriendRequestModel> GetFriendRequestsList(int currentPage)
         {
-            return Service.GetRequestedFriendsList(currentUserId, currentPage);
+            return Service.GetRequestedFriendsList(CurrentUser.Id, currentPage);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void AddFriend(Guid currentUserId, Guid idUser)
+        public void AddFriend(Guid idUser)
         {
-            Service.AddFriend(idUser, currentUserId);
+            Service.AddFriend(idUser, CurrentUser.Id);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void DeleteFriend(Guid currentUserId, Guid idUser)
+        public void DeleteFriend(Guid idUser)
         {
-            Service.DeleteFriend(currentUserId, idUser);
+            Service.DeleteFriend(CurrentUser.Id, idUser);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void AcceptFriendRequest(Guid currentUserId, Guid idUser)
+        public void AcceptFriendRequest(Guid idUser)
         {
-            Service.AcceptFriendRequest(currentUserId, idUser);
+            Service.AcceptFriendRequest(CurrentUser.Id, idUser);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void DeclineFriendRequest(Guid currentUserId, Guid idUser)
+        public void DeclineFriendRequest(Guid idUser)
         {
-            Service.DeclineFriendRequest(currentUserId, idUser);
+            Service.DeclineFriendRequest(CurrentUser.Id, idUser);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void RemoveFriendRequest(Guid currentUserId, Guid idUser)
+        public void RemoveFriendRequest(Guid idUser)
         {
-            Service.RemoveFriendRequest(currentUserId, idUser);
+            Service.RemoveFriendRequest(CurrentUser.Id, idUser);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void BlockUser(Guid currentUserId, Guid idUser)
+        public void BlockUser(Guid idUser)
         {
-            Service.BlockUser(currentUserId, idUser);
+            Service.BlockUser(CurrentUser.Id, idUser);
         }
 
         [Authorize(Policy = "RegularOnly")]
-        public void UnblockUser(Guid currentUserId, Guid idUser)
+        public void UnblockUser(Guid idUser)
         {
-            Service.UnblockUser(currentUserId, idUser);
+            Service.UnblockUser(CurrentUser.Id, idUser);
         }
 
         //--------------------------------------------Programs-----------------------------------------------
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult FitProProgram(Guid userId)
+        public IActionResult FitProProgram()
         {
-            return View(FitProProgramService.GetUserCurrentPrograms(userId));
+            return View(FitProProgramService.GetUserCurrentPrograms(CurrentUser.Id));
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult CreateProgram(Guid userId)
+        public IActionResult CreateProgram()
         {
             var model = new CreateProgramModel();
             FitProProgramService.PopulateWorkoutCategoryDropDown(model);
@@ -184,18 +184,18 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult CreateProgram(Guid userId, CreateProgramModel  model)
+        public IActionResult CreateProgram(CreateProgramModel  model)
         {
             FitProProgramService.PopulateWorkoutCategoryDropDown(model);
-            FitProProgramService.CreateFitProProgram(userId, model);
+            FitProProgramService.CreateFitProProgram(CurrentUser.Id, model);
 
-            return RedirectToAction("FitProProgram", "User", userId);
+            return RedirectToAction("FitProProgram", "User");
         }
 
         [HttpGet]
-        public IActionResult CurrentFitProProgram(Guid currentUserId, Guid programId)
+        public IActionResult CurrentFitProProgram(Guid programId)
         {
-            var model = FitProProgramService.GetUserCurrentProgram(currentUserId, programId);
+            var model = FitProProgramService.GetUserCurrentProgram(CurrentUser.Id, programId);
             return View(model);
         }
 

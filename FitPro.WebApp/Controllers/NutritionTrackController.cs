@@ -22,18 +22,18 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult DailyTrack(Guid idRegularUser, string date = "")
+        public IActionResult DailyTrack(string date = "")
         {
             var actualDate = string.IsNullOrEmpty(date) ?
                     DateTime.Now : DateTime.Parse(date);
             
-            var model = Service.GetDailyList(actualDate, idRegularUser);
+            var model = Service.GetDailyList(actualDate, CurrentUser.Id);
             return View(model);
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult NavigateDay(Guid idRegularUser, bool prev, string date = "")
+        public IActionResult NavigateDay(bool prev, string date = "")
         {
             var actualDate = string.IsNullOrEmpty(date) ?
                     DateTime.Now : DateTime.Parse(date);
@@ -43,7 +43,7 @@ namespace FitPro.WebApp.Controllers
             return RedirectToAction(
                 "DailyTrack",
                 "NutritionTrack",
-                new { date = prevDay.ToString("dd/MM/yyyy HH:mm"), idRegularUser = idRegularUser }
+                new { date = prevDay.ToString("dd/MM/yyyy HH:mm")}
             );
         }
 
@@ -61,78 +61,76 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult AddAlimentTrack(SaveAlimentTrackModel model, Guid idRegularUser)
+        public IActionResult AddAlimentTrack(SaveAlimentTrackModel model)
         {
-            model.IdRegularUser = idRegularUser;
+            model.IdRegularUser = CurrentUser.Id;
             model.FoodList = Service.PopulateFoodList();
             Service.AddAlimentTrack(model);
             return RedirectToAction(
                 "DailyTrack", 
                 "NutritionTrack", 
-                new { date = model.Date.ToString("dd/MM/yyyy HH:mm"), idRegularUser = idRegularUser }
+                new { date = model.Date.ToString("dd/MM/yyyy HH:mm")}
             );
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult EditAlimentTrack(Guid idAliment,
-            Guid idRegularUser, string date)
+        public IActionResult EditAlimentTrack(Guid idAliment, string date)
         {
-            var model = Service.GetEditAlimentTrackModel(idAliment, idRegularUser, DateTime.Parse(date));
+            var model = Service.GetEditAlimentTrackModel(idAliment, CurrentUser.Id, DateTime.Parse(date));
             return View(model);
         }
 
         [HttpPost]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult EditAlimentTrack(SaveAlimentTrackModel model, Guid idRegularUser)
+        public IActionResult EditAlimentTrack(SaveAlimentTrackModel model)
         {
-            model.IdRegularUser = idRegularUser;
+            model.IdRegularUser = CurrentUser.Id;
             Service.EditAlimentTrack(model);
             return RedirectToAction(
                 "DailyTrack",
                 "NutritionTrack",
-                new { date = model.Date.ToString("dd/MM/yyyy HH:mm"), idRegularUser = idRegularUser }
+                new { date = model.Date.ToString("dd/MM/yyyy HH:mm")}
             );
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult DeleteAlimentTrack(Guid idAliment,
-            Guid idRegularUser, string date)
+        public IActionResult DeleteAlimentTrack(Guid idAliment, string date)
         {
-            Service.DeleteAlimentTrack(idAliment, idRegularUser, DateTime.Parse(date));  
+            Service.DeleteAlimentTrack(idAliment, CurrentUser.Id, DateTime.Parse(date));  
             return RedirectToAction(
                 "DailyTrack",
                 "NutritionTrack",
-                new { date = date, idRegularUser = idRegularUser }
+                new { date = date}
             );
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult ViewCalendar(Guid idRegularUser, int year, int month)
+        public IActionResult ViewCalendar(int year, int month)
         {
-            var model = Service.GetViewMonthCalendar(idRegularUser, year, month);
+            var model = Service.GetViewMonthCalendar(CurrentUser.Id, year, month);
             return View(model);
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public void ChangeActiveDay(Guid idRegularUser, string date)
+        public void ChangeActiveDay(string date)
         {
-            Service.ChangeActiveDay(idRegularUser, DateTime.Parse(date));
+            Service.ChangeActiveDay(CurrentUser.Id, DateTime.Parse(date));
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
-        public IActionResult NavigateMonth(Guid idRegularUser, bool prev, string monthName, int year)
+        public IActionResult NavigateMonth(bool prev, string monthName, int year)
         {
             var newDate = Service.NavigateMonth(prev, monthName, year);
 
             return RedirectToAction(
                 "ViewCalendar",
                 "NutritionTrack",
-                new { idRegularUser = idRegularUser, year = newDate.Year, month = newDate.Month }
+                new { year = newDate.Year, month = newDate.Month }
             );
         }
 
@@ -161,14 +159,14 @@ namespace FitPro.WebApp.Controllers
         [Authorize(Policy = "RegularOnly")]
         public GraphModel MonthStatistic(int year, string month, int macronutrient)
         {
-            return Service.GetMonthlyStatistic(this.CurrentUser.Id, month, year, macronutrient);
+            return Service.GetMonthlyStatistic(CurrentUser.Id, month, year, macronutrient);
         }
 
         [HttpGet]
         [Authorize(Policy = "RegularOnly")]
         public GraphModel YearStatistic(int year, int macronutrient)
         {
-            return Service.GetYearlyStatistic(this.CurrentUser.Id, year, macronutrient);
+            return Service.GetYearlyStatistic(CurrentUser.Id, year, macronutrient);
         }
     }
 }

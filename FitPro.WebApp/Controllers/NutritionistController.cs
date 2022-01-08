@@ -37,9 +37,9 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult AddAliment(AddAlimentModel model, Guid nutritionistId)
+        public IActionResult AddAliment(AddAlimentModel model)
         {
-            model.IdNutritionist = nutritionistId;
+            model.IdNutritionist = CurrentUser.Id;
             Service.AddAliment(model);
             return RedirectToAction("AlimentsList", "Nutritionist", new { currnetPage = 1 });
         }
@@ -54,22 +54,22 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult EditAliment(EditAlimentModel model, Guid nutritionistId)
+        public IActionResult EditAliment(EditAlimentModel model)
         {
-            model.Nutritionist = nutritionistId;
+            model.Nutritionist = CurrentUser.Id;
             Service.EditAliment(model);
             return RedirectToAction("AlimentsList", "Nutritionist", new { currnetPage = 1 });
         }
 
         [HttpGet]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult DeleteAliment(string alimentName, Guid currentId)
+        public IActionResult DeleteAliment(string alimentName)
         {
             var model = Service.GetDeleteAlimentModelByName(alimentName);
 
-            model.IdNutritionist = (model.IdNutritionist == Guid.Empty) ? currentId : model.IdNutritionist;
+            model.IdNutritionist = (model.IdNutritionist == Guid.Empty) ? CurrentUser.Id : model.IdNutritionist;
 
-            return (model.IdNutritionist == currentId) ? View(model) : RedirectToAction("DeleteAlimentNotPermited", "Nutritionist", model);
+            return (model.IdNutritionist == CurrentUser.Id) ? View(model) : RedirectToAction("DeleteAlimentNotPermited", "Nutritionist", model);
         }
 
         [HttpPost]
@@ -91,17 +91,17 @@ namespace FitPro.WebApp.Controllers
         /* ----------------------------------------------------------------------------------------------------------------- */
 
         [HttpGet]
-        public List<RecipeModel> GetRecipesList(Guid currentUserId, int currentPage, string FilterJsonString)
+        public List<RecipeModel> GetRecipesList(int currentPage, string FilterJsonString)
         {
             var filter = JsonConvert.DeserializeObject<FilterRecipeModel>(FilterJsonString);
-            var list = Service.GetRecipesList(currentUserId, currentPage, filter);
+            var list = Service.GetRecipesList(CurrentUser.Id, currentPage, filter);
             return list;
         }
 
         [HttpGet]
-        public IActionResult NutritionistRecipesList(Guid currentId)
+        public IActionResult NutritionistRecipesList()
         {
-            var model = Service.GetRecipeModelList(currentId);
+            var model = Service.GetRecipeModelList(CurrentUser.Id);
             return View(model);
         }
 
@@ -116,11 +116,11 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult AddRecipe(AddRecipeModel model, Guid nutritionistId)
+        public IActionResult AddRecipe(AddRecipeModel model)
         {
-            model.IdNutritionist = nutritionistId;
+            model.IdNutritionist = CurrentUser.Id;
             Service.AddRecipe(model);
-            return RedirectToAction("NutritionistRecipesList","Nutritionist", new { currentId = nutritionistId });
+            return RedirectToAction("NutritionistRecipesList","Nutritionist");
         }
 
         [HttpGet]
@@ -134,11 +134,11 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult EditRecipe(EditRecipeModel model, Guid nutritionistId)
+        public IActionResult EditRecipe(EditRecipeModel model)
         {
-            model.IdNutritionist = nutritionistId;
+            model.IdNutritionist = CurrentUser.Id;
             Service.EditRecipe(model);
-            return RedirectToAction("NutritionistRecipesList", "Nutritionist", new { currentId = nutritionistId });
+            return RedirectToAction("NutritionistRecipesList", "Nutritionist");
         }
 
         [HttpGet]
@@ -150,11 +150,11 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult DeleteRecipe(Guid idRecipe, Guid currentId)
+        public IActionResult DeleteRecipe(Guid idRecipe)
         {
             var model = Service.GetDeleteRecipeModelById(idRecipe);
 
-            if(model.IdNutritionist != currentId)
+            if(model.IdNutritionist != CurrentUser.Id)
             {
                 return RedirectToAction("DeleteRecipeNotPermited", "Nutritionist", model);
             }
@@ -164,10 +164,10 @@ namespace FitPro.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Policy = "NutritionistOnly")]
-        public IActionResult DeleteRecipe(DeleteRecipeModel model, Guid nutritionistId)
+        public IActionResult DeleteRecipe(DeleteRecipeModel model)
         {
             Service.DeleteRecipe(model);
-            return RedirectToAction("NutritionistRecipesList", "Nutritionist", new { currentId = nutritionistId });
+            return RedirectToAction("NutritionistRecipesList", "Nutritionist");
         }
 
         [HttpGet]

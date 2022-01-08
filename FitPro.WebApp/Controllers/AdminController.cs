@@ -23,7 +23,7 @@ namespace FitPro.WebApp.Controllers
 
         [HttpGet]
         [Authorize(Policy = "AdminOnly")]
-        public IActionResult AdminAddUser(Guid idAdmin)
+        public IActionResult AdminAddUser()
         {
             var model = new AdminAddUserModel();
             Service.PopulateRolesDropDown(model);
@@ -34,16 +34,17 @@ namespace FitPro.WebApp.Controllers
         [Authorize(Policy = "AdminOnly")]
         public IActionResult AdminAddUser(AdminAddUserModel model)
         {
+            model.IdAdmin = CurrentUser.Id;
             Service.PopulateRolesDropDown(model);
             Service.AdminAddUser(model);
-            return RedirectToAction("UsersList", "Admin", new { currentPage = 1, rowNumber = 10 });
+            return RedirectToAction("AdminUsersList", "Admin", new { currentPage = 1, rowNumber = 10 });
         }
 
         [HttpGet]
         [Authorize(Policy = "AdminOnly")]
-        public IActionResult AdminDeleteUser(Guid idAdmin, string emailUser)
+        public IActionResult AdminDeleteUser(string emailUser)
         {
-            var model = Service.GetDeleteUserModel(idAdmin, emailUser);
+            var model = Service.GetDeleteUserModel(CurrentUser.Id, emailUser);
             return View(model);
         }
 

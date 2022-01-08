@@ -1,7 +1,5 @@
 ﻿@model List<FitPro.BusinessLogic.FriendRecommand>
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 <div class="home-container">
     <div class="display-4 text-center">
         My Recommandations
@@ -136,7 +134,6 @@
             <span class="details" style="cursor:pointer" data-username="{{friendUserName}}" onclick="friendDetail(event)">
                 {{friendUserName}}
             </span>
-            <span> shared with you</span>
             <span style="cursor:pointer" data-link="{{itemLink}} " onclick="detailWorkout(event)">
                 "{{itemName}}"
             </span>

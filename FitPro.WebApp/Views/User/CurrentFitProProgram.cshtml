@@ -1,7 +1,5 @@
 ﻿@model FitPro.BusinessLogic.FitProProgramModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 <input id="programId" value="@Model.ProgramId" hidden />
 
 <div class="home-container">
@@ -69,7 +67,7 @@
     </div>
 
     <div class="text-center crem-text">
-        <a asp-controller="User" asp-action="FitProProgram" asp-route-userId="@CurrentUser.Id"><div class="brown-text">Back to your FitProPrograms</div></a>
+        <a asp-controller="User" asp-action="FitProProgram"><div class="brown-text">Back to your FitProPrograms</div></a>
         <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to Home</div></a>
     </div>
 </div>

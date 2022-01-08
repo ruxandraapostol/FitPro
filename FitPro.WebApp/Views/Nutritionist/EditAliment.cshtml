@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.EditAlimentModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <div class="container home-container">
     <div class="row">
@@ -10,7 +9,7 @@
             </div>
 
 
-            <form asp-action="EditAliment" asp-controller="Nutritionist" asp-route-nutritionistId="@CurrentUser.Id">
+            <form asp-action="EditAliment" asp-controller="Nutritionist">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>

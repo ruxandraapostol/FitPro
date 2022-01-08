@@ -11,7 +11,7 @@
 
         addAliment: function (item) {
             var role = $('#currentUserRole').val();
-            var id = $('#currentUserId').val();
+
             var tableBody = $("#alimentsList");
             var newRow = document.createElement("tr");
             newRow.innerHTML = '<td>' + item.name + '</td>'
@@ -22,12 +22,10 @@
             if (role == "Nutritionist") {
                 newRow.innerHTML = newRow.innerHTML +
                     '<td><a asp-action="EditAliment" asp-controller="Nutritionist" asp-route-alimentName="' + item.name + '"><i class="fas fa-edit"></i></a>'
-                    + '<a asp-action="DeleteAliment" asp-controller="Nutritionist" asp-route-alimentName="' + item.name + '" asp-route-currentId="' + id 
-                    + '"><i class="fas fa-trash"></i></a></td>';
+                    + '<a asp-action="DeleteAliment" asp-controller="Nutritionist" asp-route-alimentName="' + item.name + '"><i class="fas fa-trash"></i></a></td>';
             }
            tableBody.append(newRow);
         }
-
     }
 
     $(showMore).click(function () {

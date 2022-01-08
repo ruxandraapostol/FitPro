@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.DailyListModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <input id="recommendedCalories" value="@Model.RecommendedCalories" hidden />
 <input id="totalCalories" value="@Model.TotalCalories" hidden />
@@ -9,7 +8,6 @@
 <input id="totalCarbs" value="@Model.TotalCarbs" hidden />
 <input id="recommendedFats" value="@Model.RecommendedFats" hidden />
 <input id="totalFats" value="@Model.TotalFats" hidden />
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 
 
 <div class="container home-container">
@@ -70,14 +68,12 @@
                         <td>
                             <a asp-controller="NutritionTrack"
                                asp-action="DeleteAlimentTrack"
-                               asp-route-idRegularUser="@CurrentUser.Id"
                                asp-route-idAliment="@aliment.IdAliment"
                                asp-route-date="@aliment.Date.ToString("dd/MM/yyyy HH:mm")">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                             <a asp-controller="NutritionTrack"
                                asp-action="EditAlimentTrack"
-                               asp-route-idRegularUser="@CurrentUser.Id"
                                asp-route-idAliment="@aliment.IdAliment"
                                asp-route-date="@aliment.Date.ToString("dd/MM/yyyy HH:mm")">
                                 <i class="fas fa-edit"></i>
@@ -93,20 +89,17 @@
 
     <a asp-controller="NutritionTrack"
        asp-action="NavigateDay"
-       asp-route-idRegularUser="@CurrentUser.Id"
        asp-route-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")"
        style="max-height: 38px"><div>Next Day</div></a>
 
     <a asp-controller="NutritionTrack"
        asp-action="NavigateDay"
        asp-route-prev="@true"
-       asp-route-idRegularUser="@CurrentUser.Id"
        asp-route-date="@Model.Date.ToString("dd/MM/yyyy HH:mm")"
        style="max-height: 38px"><div>Previous Day</div></a>
 
     <a asp-controller="NutritionTrack"
        asp-action="ViewCalendar"
-       asp-route-idRegularUser="@CurrentUser.Id"
        asp-route-year="@Model.Date.Year"
        asp-route-month="@Model.Date.Month"
        style="max-height: 38px"><div>View Calendar</div></a>

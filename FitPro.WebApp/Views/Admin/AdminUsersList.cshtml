@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.UsersListModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <div class="display-4 text-center">
     Users List
@@ -16,7 +15,7 @@
     <div class="my-table-header">
         <div class="row">
             <div class="col">
-                <a asp-controller="Admin" asp-action="AdminAddUser" asp-route-idAdmin="@CurrentUser.Id" class="btn brown-btn">Add User</a>
+                <a asp-controller="Admin" asp-action="AdminAddUser" class="btn brown-btn">Add User</a>
             </div>
 
             <div class="col">
@@ -170,7 +169,7 @@
                         @item.Role
                     </td>
                     <td>
-                        <a asp-controller="Admin" asp-action="AdminDeleteUser" asp-route-idAdmin="@CurrentUser.Id" asp-route-emailUser="@item.Email">Delete </a>
+                        <a asp-controller="Admin" asp-action="AdminDeleteUser" asp-route-emailUser="@item.Email">Delete </a>
                         <a>| Details</a>
                     </td>
                 </tr>

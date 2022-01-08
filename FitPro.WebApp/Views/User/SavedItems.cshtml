@@ -1,7 +1,4 @@
 ﻿@model List<FitPro.BusinessLogic.SavedItemModel>
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
-
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 
 <div class="home-container">
     <div class="display-4 text-center">My Saved Items</div>
@@ -34,7 +31,7 @@
                             <div class="UnsaveItem" data-iditem="@elem.IdSavedItem" onclick="unsave(event)">
                                 <i class="fas fa-bookmark"></i>
                             </div>
-                            <div class="ShareItem" data-iditem="@elem.IdSavedItem" data-iduser="@CurrentUser.Id" onclick="shareItem(event)">
+                            <div class="ShareItem" data-iditem="@elem.IdSavedItem" onclick="shareItem(event)">
                                 <i class="fas fa-share"></i>
                             </div>
                         </div>
@@ -50,7 +47,7 @@
                             <div id="unsave_@elem.IdSavedItem" class="UnsaveItem" data-iditem="@elem.IdSavedItem" onclick="unsave(event)">
                                 <i class="fas fa-bookmark"></i>
                             </div>
-                            <div class="ShareItem" data-iditem="@elem.IdSavedItem" data-iduser="@CurrentUser.Id" onclick="shareItem(event)">
+                            <div class="ShareItem" data-iditem="@elem.IdSavedItem" onclick="shareItem(event)">
                                 <i class="fas fa-share"></i>
                             </div>
                         </div>
@@ -75,7 +72,7 @@
                 <div class="UnsaveItem" data-iditem="{{idSavedItem}}" onclick="unsave(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div class="ShareItem" data-iditem="{{idSavedItem}}" data-iduser="{{idCurrentUser}}" onclick="shareItem(event)">
+                <div class="ShareItem" data-iditem="{{idSavedItem}}" onclick="shareItem(event)">
                     <i class="fas fa-share"></i>
                 </div>
             </div>
@@ -86,10 +83,10 @@
             <div data-idrecipe="{{idSavedItem}}" onclick="detailRecipe(event)">
                 <i class="fas fa-book-open"></i>
             </div>
-            <div id="unsave_{{idSavedItem}}" class="UnsaveItem" data-idrecipe="{{idSavedItem}}" data-iduser="@CurrentUser.Id" onclick="unsaveRecipe(event)">
+            <div id="unsave_{{idSavedItem}}" class="UnsaveItem" data-idrecipe="{{idSavedItem}}" onclick="unsaveRecipe(event)">
                 <i class="fas fa-bookmark"></i>
             </div>
-            <div class="ShareItem" data-iditem="{{idSavedItem}}" data-iduser="{{idCurrentUser}}" onclick="shareItem(event)">
+            <div class="ShareItem" data-iditem="{{idSavedItem}}" onclick="shareItem(event)">
                 <i class="fas fa-share"></i>
             </div>
         </div>

@@ -1,5 +1,4 @@
 ﻿@model FitPro.BusinessLogic.DeleteWorkoutModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 <div class="text-center">
     <div class="display-4">Delete Workout</div>
 </div>
@@ -33,7 +32,7 @@
 
 
     <div class="text-center">
-        <a asp-controller="Trainer" asp-action="TrainerWorkoutsList" asp-route-currentId="@CurrentUser.Id"><div class="crem-text">Back to edit workouts list.</div></a>
+        <a asp-controller="Trainer" asp-action="TrainerWorkoutsList"><div class="crem-text">Back to edit workouts list.</div></a>
         <a asp-controller="Home" asp-action="Index"><div class="brown-text">Back to home.</div></a>
     </div>
 </div>

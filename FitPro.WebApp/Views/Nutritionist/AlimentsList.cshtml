@@ -6,7 +6,6 @@
 <input asp-for="CurrentPage" id="currentPage-A" hidden />
 <input asp-for="SearchString" id="searchString-A" hidden />
 <input id="currentUserRole" value="@CurrentUser.Role" hidden />
-<input id="currentUserId" value="@CurrentUser.Id" hidden />
 
 
 <div class="home-container">
@@ -59,7 +58,7 @@
                             <a asp-action="EditAliment" asp-controller="Nutritionist" asp-route-alimentName="@aliment.Name">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a asp-action="DeleteAliment" asp-controller="Nutritionist" asp-route-alimentName="@aliment.Name" asp-route-currentId="@CurrentUser.Id">
+                            <a asp-action="DeleteAliment" asp-controller="Nutritionist" asp-route-alimentName="@aliment.Name">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>

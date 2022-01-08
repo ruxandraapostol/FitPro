@@ -1,8 +1,6 @@
 ﻿@model FitPro.BusinessLogic.CalendarMonthModel
-@inject FitPro.Common.DTOs.CurrentUserDto CurrentUser
 
 <div class="container home-container">
-    <input id="currentUserId" value="@CurrentUser.Id" hidden readonly />
     <div class="display-4 text-center">Calendar View</div>
     <div class="display-6 text-center">~@Model.Month @Model.Year~</div>
 
@@ -50,7 +48,6 @@
 
         <a asp-controller="NutritionTrack"
            asp-action="NavigateMonth"
-           asp-route-idRegularUser="@CurrentUser.Id"
            asp-route-year="@Model.Year"
            asp-route-monthName="@Model.Month"
            style="max-height: 38px"><div>Next Month</div></a>
@@ -58,7 +55,6 @@
         <a asp-controller="NutritionTrack"
            asp-action="NavigateMonth"
            asp-route-prev="@true"
-           asp-route-idRegularUser="@CurrentUser.Id"
            asp-route-year="@Model.Year"
            asp-route-monthName="@Model.Month"
            style="max-height: 38px"><div>Previous Month</div></a>

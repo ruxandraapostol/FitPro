@@ -28,7 +28,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/User/GetFriends",
             data: {
-                currentUserId: $("#currentUserId").val(),
                 currentPage: shareItem.page,
                 searchStringFriends: $("#search-input-Friends")
             }
@@ -49,8 +48,7 @@ var shareContent = function () {
 
     var model = {
         Comment: $("#commentId").val(),
-        IdItem: $("#itemId").val(),
-        CurrentUserId: $("#currentUserId").val()
+        IdItem: $("#itemId").val()
     };
 
 
@@ -65,13 +63,13 @@ var shareContent = function () {
 
             switch (prevPage) {
                 case "workouts":
-                    window.location.href = "/Trainer/TrainerWorkoutsList?currentId=" + $("#currentUserId").val();
+                    window.location.href = "/Trainer/TrainerWorkoutsList";
                     break;
                 case "recipes":
-                    window.location.href = "/Nutritionist/NutritionistRecipesList?currentId=" + $("#currentUserId").val();
+                    window.location.href = "/Nutritionist/NutritionistRecipesList";
                     break;
                 case "savedItems":
-                    window.location.href = "/User/SavedItems?userId=" + $("#currentUserId").val();
+                    window.location.href = "/User/SavedItems";
                     break;
                 default:
                     window.location.href = "/Home/Index";

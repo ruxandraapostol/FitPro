@@ -11,8 +11,7 @@ var workouts = {
         var context = {
             "linkUrl": item.linkUrl,
             "name": item.name,
-            "programId": $("#programId").val(),
-            "userId": $("#currentUserId").val()
+            "programId": $("#programId").val()
         };
 
         var html = templateScript(context);
@@ -84,7 +83,7 @@ $(document).scroll(function () {
 var detailWorkout = function (event) {
     var linkUrl = $(event.currentTarget).data("link");
 
-    window.location.href = '/Trainer/DetailWorkout?workoutLink=' + linkUrl + '&programId='
-                + $("#programId").val() + '&userId=' + $("#currentUserId").val();
+    window.location.href = '/Trainer/DetailWorkout?workoutLink=' + linkUrl
+        + '&programId=' + $("#programId").val();
 }
 

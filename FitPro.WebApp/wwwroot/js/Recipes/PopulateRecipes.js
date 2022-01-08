@@ -1,7 +1,4 @@
-﻿var currentUserId = $('#CurrentUserId').val();
-var currentUserRole = $('#CurrentUserRole').val();
-
-
+﻿var currentUserRole = $('#CurrentUserRole').val();
 
 var recipes = {
     page: 1,
@@ -13,7 +10,6 @@ var recipes = {
 
 
         var context = {
-            "idUser": currentUserId,
             "role": currentUserRole,
             "name": item.name,
             "idRecipe": item.idRecipe,
@@ -84,7 +80,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/Nutritionist/GetRecipesList',
             data: {
-                currentUserId: currentUserId,
                 currentPage: recipes.page,
                 FilterJsonString: JSON.stringify(getFilter()),
             },
@@ -108,7 +103,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/Nutritionist/GetRecipesList",
             data: {
-                currentUserId: currentUserId,
                 currentPage: recipes.page,
                 FilterJsonString: JSON.stringify(getFilter()),
             }
@@ -153,24 +147,20 @@ var editRecipe = function (event) {
 
 var deleteRecipe = function (event) {
     var idRecipe = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("id")
 
     $.ajax({
         url: '/Nutritionist/DeleteRecipe',
         data: {
-            idRecipe: idRecipe,
-            currentId: userId
+            idRecipe: idRecipe
         },
         success: function (data) {
-            window.location.href = '/Nutritionist/DeleteRecipe?idRecipe='
-                + idRecipe + '&currentId=' + userId;
+            window.location.href = '/Nutritionist/DeleteRecipe?idRecipe=' + idRecipe;
         }
     });
 }
 
 var saveRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("iduser")
 
     var savediv = '#save_' + recipeId;
     var unsavediv = '#unsave_' + recipeId;
@@ -181,7 +171,6 @@ var saveRecipe = function (event) {
     $.ajax({
         url: '/User/SaveItem',
         data: {
-            currentUserId: userId,
             itemId: recipeId,
         },
     });
@@ -189,7 +178,6 @@ var saveRecipe = function (event) {
 
 var unsaveRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("iduser");
 
     var savediv = '#save_' + recipeId;
     var unsavediv = '#unsave_' + recipeId;
@@ -200,7 +188,6 @@ var unsaveRecipe = function (event) {
     $.ajax({
         url: '/User/UnsaveItem',
         data: {
-            currentUserId: userId,
             itemId: recipeId,
         },
     });
@@ -208,8 +195,6 @@ var unsaveRecipe = function (event) {
 
 var shareRecipe = function (event) {
     var recipeId = $(event.currentTarget).data("idrecipe");
-    var userId = $(event.currentTarget).data("iduser");
 
-    window.location.href = '/User/RecommandItem?currentUserId=' + userId
-        + '&itemId=' + recipeId + '&fromPage=recipes';
+    window.location.href = '/User/RecommandItem?itemId=' + recipeId + '&fromPage=recipes';
 }

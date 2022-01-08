@@ -4,7 +4,6 @@
 <div class="display-4 text-center">Workouts List</div>
 
 <input id="CurrentUserRole" value="@CurrentUser.Role" hidden />
-<input id="CurrentUserId" value="@CurrentUser.Id" hidden />
 
 <div class="home-container">
     <div class="my-table-header">
@@ -110,7 +109,7 @@
                         <a asp-controller="Trainer" asp-action="EditWorkout" asp-route-workoutLink="@elem.LinkUrl">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a asp-controller="Trainer" asp-action="DeleteWorkout" asp-route-workoutLink="@elem.LinkUrl" asp-route-currentId="@CurrentUser.Id">
+                        <a asp-controller="Trainer" asp-action="DeleteWorkout" asp-route-workoutLink="@elem.LinkUrl">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     }
@@ -119,24 +118,24 @@
 
                         @if (elem.IsSaved)
                         {
-                            <div id="unsave_@elem.IdWorkout" class="UnsaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="unsaveWorkout(event)">
+                            <div id="unsave_@elem.IdWorkout" class="UnsaveItem" data-idworkout="@elem.IdWorkout" onclick="unsaveWorkout(event)">
                                 <i class="fas fa-bookmark"></i>
                             </div>
-                            <div id="save_@elem.IdWorkout" style="display:none" class="SaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="saveWorkout(event)">
+                            <div id="save_@elem.IdWorkout" style="display:none" class="SaveItem" data-idworkout="@elem.IdWorkout" onclick="saveWorkout(event)">
                                 <i class="far fa-bookmark"></i>
                             </div>
                         }
                         else
                         {
-                            <div id="unsave_@elem.IdWorkout" style="display:none"  class="UnsaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="unsaveWorkout(event)">
+                            <div id="unsave_@elem.IdWorkout" style="display:none"  class="UnsaveItem" data-idworkout="@elem.IdWorkout" onclick="unsaveWorkout(event)">
                                 <i class="fas fa-bookmark"></i>
                             </div>
-                            <div id="save_@elem.IdWorkout" class="SaveItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="saveWorkout(event)">
+                            <div id="save_@elem.IdWorkout" class="SaveItem" data-idworkout="@elem.IdWorkout" onclick="saveWorkout(event)">
                                 <i class="far fa-bookmark"></i>
                             </div>
                         }
 
-                        <div class="ShareItem" data-idworkout="@elem.IdWorkout" data-iduser="@CurrentUser.Id" onclick="shareWorkout(event)">
+                        <div class="ShareItem" data-idworkout="@elem.IdWorkout" onclick="shareWorkout(event)">
                             <i class="fas fa-share"></i>
                         </div>
                     }
@@ -159,21 +158,21 @@
                 </div>
                 {{#ifEquals role "Regular"}}
                 {{#if isSaved}}
-                <div id="unsave_{{idWorkout}}" class="UnsaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="unsaveWorkout(event)">
+                <div id="unsave_{{idWorkout}}" class="UnsaveItem" data-idworkout="{{idWorkout}}" onclick="unsaveWorkout(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div id="save_{{idWorkout}}" style="display:none" class="SaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="saveWorkout(event)">
+                <div id="save_{{idWorkout}}" style="display:none" class="SaveItem" data-idworkout="{{idWorkout}}" onclick="saveWorkout(event)">
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{else}}
-                <div id="unsave_{{idWorkout}}" style="display:none"  class="UnsaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="unsaveWorkout(event)">
+                <div id="unsave_{{idWorkout}}" style="display:none"  class="UnsaveItem" data-idworkout="{{idWorkout}}" onclick="unsaveWorkout(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div id="save_{{idWorkout}}" class="SaveItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="saveWorkout(event)">
+                <div id="save_{{idWorkout}}" class="SaveItem" data-idworkout="{{idWorkout}}" onclick="saveWorkout(event)">
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{/if}}
-                <div class="ShareItem" data-idworkout="{{idWorkout}}" data-iduser="{{idUser}}" onclick="shareWorkout(event)">
+                <div class="ShareItem" data-idworkout="{{idWorkout}}" onclick="shareWorkout(event)">
                     <i class="fas fa-share"></i>
                 </div>
                 {{/ifEquals}}
@@ -182,7 +181,7 @@
                 <div class="editWorkout" data-link="{{linkUrl}}" onclick="editWorkout(event)">
                     <i class="fas fa-edit"></i>
                 </div>
-                <div class="deleteWorkout" data-link="{{linkUrl}}" data-id="{{idUser}}" onclick="deleteWorkout(event)" asp-route-currentId="@CurrentUser.Id">
+                <div class="deleteWorkout" data-link="{{linkUrl}}" onclick="deleteWorkout(event)">
                     <i class="fas fa-trash-alt"></i>
                 </div>
                 {{/ifEquals}}

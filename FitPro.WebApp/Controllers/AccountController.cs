@@ -67,9 +67,9 @@ namespace FitPro.WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditRegularProfile(Guid userId)
+        public ActionResult EditRegularProfile()
         {
-            var model = Service.ProfileRegularUserById(userId);
+            var model = Service.ProfileRegularUserById(CurrentUser.Id);
             return View(model);
         }
 
@@ -84,9 +84,9 @@ namespace FitPro.WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangePassword(Guid id)
+        public ActionResult ChangePassword()
         {
-            var newModel = Service.GetChangePasswordModel(id);
+            var newModel = Service.GetChangePasswordModel(CurrentUser.Id);
             return View(newModel);
         }
 
@@ -101,9 +101,9 @@ namespace FitPro.WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteAccount(Guid id)
+        public ActionResult DeleteAccount()
         {
-            var newModel = Service.GetLoginModel(id);
+            var newModel = Service.GetLoginModel(CurrentUser.Id);
             return View(newModel);
         }
 
@@ -118,9 +118,9 @@ namespace FitPro.WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditSpecialProfile(Guid userId)
+        public ActionResult EditSpecialProfile()
         {
-            var model = Service.ProfileSpecialUserById(userId);
+            var model = Service.ProfileSpecialUserById(CurrentUser.Id);
             return View(model);
         }
 

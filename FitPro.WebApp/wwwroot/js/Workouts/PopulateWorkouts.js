@@ -1,5 +1,4 @@
-﻿var currentUserId = $('#CurrentUserId').val();
-var currentUserRole = $('#CurrentUserRole').val();
+﻿var currentUserRole = $('#CurrentUserRole').val();
 
 
 
@@ -13,7 +12,6 @@ var workouts = {
 
 
         var context = {
-            "idUser": currentUserId,
             "role": currentUserRole,
             "name": item.name,
             "linkUrl": item.linkUrl,
@@ -86,7 +84,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/Trainer/GetWorkoutsList',
             data: {
-                currentUserId: currentUserId,
                 currentPage: workouts.page,
                 FilterJsonString: JSON.stringify(getFilters()),
             },
@@ -110,7 +107,6 @@ $(document).scroll(function () {
         $.ajax({
             url: "/Trainer/GetWorkoutsList",
             data: {
-                currentUserId: currentUserId,
                 currentPage: workouts.page,
                 FilterJsonString: JSON.stringify(getFilters()),
             }
@@ -155,24 +151,20 @@ var editWorkout = function (event) {
 
 var deleteWorkout = function (event) {
     var linkUrl = $(event.currentTarget).data("link");
-    var userId = $(event.currentTarget).data("id")
 
     $.ajax({
         url: '/Trainer/DeleteWorkout',
         data: {
-            workoutLink: linkUrl,
-            currentId: userId
+            workoutLink: linkUrl
         },
         success: function (data) {
-            window.location.href = '/Trainer/DeleteWorkout?workoutLink='
-                + linkUrl + '&currentId=' + userId;
+            window.location.href = '/Trainer/DeleteWorkout?workoutLink=' + linkUrl;
         }
     });
 }
 
 var saveWorkout = function (event) {
     var workoutId = $(event.currentTarget).data("idworkout");
-    var userId = $(event.currentTarget).data("iduser")
 
     var savediv = '#save_' + workoutId;
     var unsavediv = '#unsave_' + workoutId;
@@ -183,7 +175,6 @@ var saveWorkout = function (event) {
     $.ajax({
         url: '/User/SaveItem',
         data: {
-            currentUserId: userId,
             itemId: workoutId,
         },
     });
@@ -191,7 +182,6 @@ var saveWorkout = function (event) {
 
 var unsaveWorkout = function (event) {
     var workoutId = $(event.currentTarget).data("idworkout");
-    var userId = $(event.currentTarget).data("iduser")
 
     var savediv = '#save_' + workoutId;
     var unsavediv = '#unsave_' + workoutId;
@@ -202,7 +192,6 @@ var unsaveWorkout = function (event) {
     $.ajax({
         url: '/User/UnsaveItem',
         data: {
-            currentUserId: userId,
             itemId: workoutId,
         },
     });
@@ -210,8 +199,6 @@ var unsaveWorkout = function (event) {
 
 var shareWorkout = function (event) {
     var workoutId = $(event.currentTarget).data("idworkout");
-    var userId = $(event.currentTarget).data("iduser");
 
-    window.location.href = '/User/RecommandItem?currentUserId=' + userId
-        + '&itemId=' + workoutId + '&fromPage=workouts';
+    window.location.href = '/User/RecommandItem?itemId=' + workoutId + '&fromPage=workouts';
 }

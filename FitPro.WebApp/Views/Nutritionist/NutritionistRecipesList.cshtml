@@ -4,7 +4,6 @@
 <div class="display-4 text-center">Recipes List</div>
 
 <input id="CurrentUserRole" value="@CurrentUser.Role" hidden />
-<input id="CurrentUserId" value="@CurrentUser.Id" hidden />
 
 <div class="home-container">
     <div class="my-table-header">
@@ -112,7 +111,7 @@
                             <a asp-controller="Nutritionist" asp-action="EditRecipe" asp-route-idRecipe="@elem.IdRecipe">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a asp-controller="Nutritionist" asp-action="DeleteRecipe" asp-route-idRecipe="@elem.IdRecipe" asp-route-currentId="@CurrentUser.Id">
+                            <a asp-controller="Nutritionist" asp-action="DeleteRecipe" asp-route-idRecipe="@elem.IdRecipe">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         }
@@ -121,24 +120,24 @@
 
                             @if (elem.IsSaved)
                             {
-                                <div id="unsave_@elem.IdRecipe" class="UnsaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="unsaveRecipe(event)">
+                                <div id="unsave_@elem.IdRecipe" class="UnsaveItem" data-idrecipe="@elem.IdRecipe" onclick="unsaveRecipe(event)">
                                     <i class="fas fa-bookmark"></i>
                                 </div>
-                                <div id="save_@elem.IdRecipe" style="display:none" class="SaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="saveRecipe(event)">
+                                <div id="save_@elem.IdRecipe" style="display:none" class="SaveItem" data-idrecipe="@elem.IdRecipe" onclick="saveRecipe(event)">
                                     <i class="far fa-bookmark"></i>
                                 </div>
                             }
                             else
                             {
-                                <div id="unsave_@elem.IdRecipe" style="display:none" class="UnsaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="unsaveRecipe(event)">
+                                <div id="unsave_@elem.IdRecipe" style="display:none" class="UnsaveItem" data-idrecipe="@elem.IdRecipe" onclick="unsaveRecipe(event)">
                                     <i class="fas fa-bookmark"></i>
                                 </div>
-                                <div id="save_@elem.IdRecipe" class="SaveItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="saveRecipe(event)">
+                                <div id="save_@elem.IdRecipe" class="SaveItem" data-idrecipe="@elem.IdRecipe" onclick="saveRecipe(event)">
                                     <i class="far fa-bookmark"></i>
                                 </div>
                             }
 
-                            <div id="share_@elem.IdRecipe" class="ShareItem" data-idrecipe="@elem.IdRecipe" data-iduser="@CurrentUser.Id" onclick="shareRecipe(event)">
+                            <div id="share_@elem.IdRecipe" class="ShareItem" data-idrecipe="@elem.IdRecipe" onclick="shareRecipe(event)">
                                 <i class="fas fa-share"></i>
                             </div>
                         }
@@ -166,28 +165,28 @@
                 <div class="editRecipe" data-idrecipe="{{idRecipe}}" onclick="editRecipe(event)">
                     <i class="fas fa-edit"></i>
                 </div>
-                <div class="deleteRecipe" data-idrecipe="{{idRecipe}}" data-id="{{idUser}}"  onclick="deleteRecipe(event)" >
+                <div class="deleteRecipe" data-idrecipe="{{idRecipe}}" onclick="deleteRecipe(event)" >
                     <i class="fas fa-trash-alt"></i>
                 </div>
                 {{/ifEquals}}
                 {{#ifEquals role "Regular"}}
                 {{#if isSaved}}
-                <div id="unsave_{{idRecipe}}" class="UnsaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="unsaveRecipe(event)">
+                <div id="unsave_{{idRecipe}}" class="UnsaveItem" data-idrecipe="{{idRecipe}}" onclick="unsaveRecipe(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div id="save_{{idRecipe}}" style="display:none" class="SaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="saveRecipe(event)">
+                <div id="save_{{idRecipe}}" style="display:none" class="SaveItem" data-idrecipe="{{idRecipe}}" onclick="saveRecipe(event)">
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{else}}
-                <div id="unsave_{{idRecipe}}" style="display:none" class="UnsaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="unsaveRecipe(event)">
+                <div id="unsave_{{idRecipe}}" style="display:none" class="UnsaveItem" data-idrecipe="{{idRecipe}}" onclick="unsaveRecipe(event)">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div id="save_{{idRecipe}}" class="SaveItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="saveRecipe(event)">
+                <div id="save_{{idRecipe}}" class="SaveItem" data-idrecipe="{{idRecipe}}" onclick="saveRecipe(event)">
                     <i class="far fa-bookmark"></i>
                 </div>
                 {{/if}}
 
-                <div id="share_{{idRecipe}}" class="ShareItem" data-idrecipe="{{idRecipe}}" data-iduser="{{idUser}}" onclick="shareRecipe(event)">
+                <div id="share_{{idRecipe}}" class="ShareItem" data-idrecipe="{{idRecipe}}" onclick="shareRecipe(event)">
                     <i class="fas fa-share"></i>
                 </div>
                 {{/ifEquals}}
