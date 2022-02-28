@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using WebMatrix.WebData;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace FitPro.BusinessLogic
@@ -15,6 +16,7 @@ namespace FitPro.BusinessLogic
     {
         private readonly LoginValidation LoginValidator;
         private readonly ChangePasswordValidation ChangePasswordValidator;
+        private readonly ForgotPasswordValidation ForgotPasswordValidator;
         private readonly RegularUserRegisterValidation RegisterRegularUserValidator;
         private readonly RegularUserProfileEditingValidation EditRegularUserValidator;
         private readonly SpecialUserProfileEditingValidation EditSpecialUserValidator;
@@ -23,6 +25,7 @@ namespace FitPro.BusinessLogic
         {
             this.LoginValidator = new LoginValidation(this);
             this.ChangePasswordValidator = new ChangePasswordValidation(this);
+            this.ForgotPasswordValidator = new ForgotPasswordValidation(this);
             this.RegisterRegularUserValidator = new RegularUserRegisterValidation(this);
             this.EditRegularUserValidator = new RegularUserProfileEditingValidation(this);
             this.EditSpecialUserValidator = new SpecialUserProfileEditingValidation(this);
@@ -36,7 +39,6 @@ namespace FitPro.BusinessLogic
                 .SingleOrDefault(x => x.UserName == userName)?
                 .IdRoleNavigation.Name;
         }
-
        
 
         public DetailsRegular GetDetailsRegular(string userName)
@@ -549,6 +551,69 @@ namespace FitPro.BusinessLogic
             });
 
             return List;
+        }
+
+        public string ForgotPassword(ForgotPasswordModel model)
+        {
+            ExecuteInTransaction(uow =>
+            {
+                ForgotPasswordValidator.Validate(model).ThenThrow(model);
+
+                var newToken = Guid.NewGuid();
+
+                var existingToken = uow.EmailTokens.Get().SingleOrDefault(e => e.Email == model.Email);
+
+                if(existingToken == null)
+                {
+                    existingToken = new EmailTokens()
+                    {
+                        Email = model.Email,
+                        Date = DateTime.Now,
+                        Token = newToken,
+                    };
+
+                    uow.EmailTokens.Insert(existingToken);
+                } 
+                else
+                {
+                    //var time = DateTime.Now.Subtract(existingToken.Date).TotalSeconds;
+
+                    existingToken.Token = newToken; 
+                    existingToken.Date = DateTime.Now;
+
+                    uow.EmailTokens.Update(existingToken);
+                }
+
+                uow.SaveChanges();
+
+                return newToken.ToString();
+            });
+            return null;
+        }
+
+        public ResetForgotPasswordModel ResetForgotPassword(string email)
+        {
+            var model = ExecuteInTransaction(uow =>
+            {
+                var existingToken = uow.EmailTokens.Get()
+                    .SingleOrDefault(e => e.Email == email)?
+                    .Token.ToString();
+
+                var user = UnitOfWork.Users.Get()
+                    .FirstOrDefault(x => x.Email == email);
+                user.Password = BCryptNet.HashPassword(existingToken);
+
+                UnitOfWork.Users.Update(user);
+                uow.SaveChanges();
+
+                return new ResetForgotPasswordModel() 
+                {
+                    Email = email, 
+                    Password = existingToken 
+                };
+            });
+
+            return model;
         }
     }
 }

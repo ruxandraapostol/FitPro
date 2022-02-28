@@ -19,6 +19,7 @@ namespace FitPro.DataAccess
         public virtual DbSet<AlimentRegularUser> AlimentRegularUsers { get; set; }
         public virtual DbSet<CategoryR> CategoryRs { get; set; }
         public virtual DbSet<CategoryW> CategoryWs { get; set; }
+        public virtual DbSet<EmailTokens> EmailTokens { get; set; }
         public virtual DbSet<FitProProgram> FitProPrograms { get; set; }
         public virtual DbSet<FitProProgramWorkout> FitProProgramWorkouts { get; set; }
         public virtual DbSet<FitProProgramCategory> FitProProgramCategories { get; set; }
@@ -50,6 +51,7 @@ namespace FitPro.DataAccess
             modelBuilder.ApplyConfiguration(new AlimentRegularUserConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryRConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryWConfiguration());
+            modelBuilder.ApplyConfiguration(new EmailTokensConfiguration());
             modelBuilder.ApplyConfiguration(new FitProProgramConfiguration());
             modelBuilder.ApplyConfiguration(new FitProProgramWorkoutConfiguration());
             modelBuilder.ApplyConfiguration(new FitProProgramCategoryConfiguration());
