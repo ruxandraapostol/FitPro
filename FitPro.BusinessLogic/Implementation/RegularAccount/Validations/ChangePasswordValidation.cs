@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using System.Linq;
-using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace FitPro.BusinessLogic
 {

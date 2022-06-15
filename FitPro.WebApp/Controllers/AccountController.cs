@@ -186,6 +186,37 @@ namespace FitPro.WebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            var model = new ForgotPasswordModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordModel model)
+        {
+            var token = Service.ForgotPassword(model);
+            var link = Url.Action("ResetForgotPassword", "Account",
+                new
+                {
+                    email = model.Email,
+                    code = token
+                }, "http");
+
+            var lnkHref = "<a href =\"" + link + "\" > Click here </a > ";
+            
+            EmailManager.SendEmail(lnkHref, model.Email);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult ResetForgotPassword(string email)
+        {
+            var model = Service.ResetForgotPassword(email);
+            return View(model);
+        }
+
         private async Task LogIn(CurrentUserDto user)
         {
             var claims = new List<Claim>

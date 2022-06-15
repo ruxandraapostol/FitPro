@@ -254,3 +254,10 @@ constraint FK_UserActiveDays_RegularUser foreign key (IdRegularUser)
 	references [RegularUser](IdRegularUser),
 primary key (IdRegularUser, Date),
 );
+
+create table EmailTokens (
+	Date datetime not null,
+	Token uniqueidentifier not null,
+	Email nvarchar(200) not null primary key
+
+);

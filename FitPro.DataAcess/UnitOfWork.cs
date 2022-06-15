@@ -22,6 +22,9 @@ namespace FitPro.DataAccess
 
         private IRepository<CategoryW> categoriesW;
         public IRepository<CategoryW> CategoriesW => categoriesW ?? (categoriesW = new BaseRepository<CategoryW>(Context));
+        
+        private IRepository<EmailTokens> emailTokens;
+        public IRepository<EmailTokens> EmailTokens => emailTokens ?? (emailTokens = new BaseRepository<EmailTokens>(Context));
 
         private IRepository<FitProProgram> fitProPrograms;
         public IRepository<FitProProgram> FitProPrograms => fitProPrograms ?? (fitProPrograms = new BaseRepository<FitProProgram>(Context));
